@@ -20,7 +20,7 @@ public class BotService {
         }
 
         if (request.is(Command.ROLE)) {
-            CustomDate customDate = CustomDate.of(request.getTime_stamp());
+            CustomDate customDate = CustomDate.now();
             RoleMemberPairs roleMemberPairs = roleMemberPairsFactory.create();
             return new Response(customDate.text() + "일 역할입니다.\n\n" + roleMemberPairs.text());
         }
@@ -33,6 +33,6 @@ public class BotService {
             return new Response(String.format("안녕하세요, %s님. 무엇을 도와드릴까요? 🧛‍♂️\n명령은 \"도움\"으로 확인할 수 있습니다.", request.getUser_name()));
         }
 
-        return new Response("아직 구현되지 않았거나 버그입니다. 그니(01074522525)로 연락주세요. ㅠㅠ");
+        return new Response("아직 구현되지 않았거나 버그입니다. 그니(01074522525)로 연락주세요. ㅠㅠ 😭");
     }
 }

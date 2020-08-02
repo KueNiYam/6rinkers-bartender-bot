@@ -18,6 +18,10 @@ public class CustomDate {
                 .toLocalDate());
     }
 
+    public static CustomDate now() {
+        return new CustomDate(LocalDate.now());
+    }
+
     public String text() {
         return localDate.format(DateTimeFormatter.ofPattern("MM/dd"));
     }
