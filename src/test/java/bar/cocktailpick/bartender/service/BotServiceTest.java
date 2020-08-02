@@ -3,7 +3,6 @@ package bar.cocktailpick.bartender.service;
 import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
-import bar.cocktailpick.bartender.dto.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,10 +35,12 @@ class BotServiceTest {
     void serve_WhenReceiveRole() {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.ROLE)).thenReturn(true);
+        when(request.getTime_stamp()).thenReturn("1504640775.000005");
         when(roleMemberPairsFactory.create()).thenReturn(roleMemberPairs);
         when(roleMemberPairs.text()).thenReturn("천재 -> 그니");
 
-        assertThat(botService.serve(request)).isEqualTo(new Response("천재 -> 그니"));
+        System.out.println(botService.serve(request).getText());
+        assertThat(botService.serve(request).getText()).contains("천재 -> 그니", "01", "18");
     }
 
     @Test
@@ -47,7 +48,7 @@ class BotServiceTest {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.HELP)).thenReturn(true);
 
-        assertThat(botService.serve(request)).isEqualTo(new Response(Command.commands()));
+        assertThat(botService.serve(request).getText()).contains(Command.commands());
     }
 
     @Test

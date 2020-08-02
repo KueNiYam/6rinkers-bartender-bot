@@ -14,7 +14,7 @@ public class Request {
     private String channel_id;
     private String channel_name;
     private String thread_ts;
-    private Double time_stamp;
+    private String time_stamp;
     private String user_id;
     private String user_name;
     private String text;
