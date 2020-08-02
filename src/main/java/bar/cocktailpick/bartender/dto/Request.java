@@ -23,4 +23,8 @@ public class Request {
     public boolean is(Command help) {
         return help.is(trigger_word);
     }
+
+    public boolean isBot() {
+        return "USLACKBOT".equals(user_id) || "slackbot".equals(user_name);
+    }
 }
