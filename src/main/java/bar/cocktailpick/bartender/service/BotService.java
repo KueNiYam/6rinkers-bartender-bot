@@ -1,6 +1,7 @@
 package bar.cocktailpick.bartender.service;
 
 import bar.cocktailpick.bartender.domain.CustomDate;
+import bar.cocktailpick.bartender.domain.CustomDateFactory;
 import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BotService {
     private final RoleMemberPairsFactory roleMemberPairsFactory;
+    private final CustomDateFactory customDateFactory;
 
     public Response serve(Request request) {
         if (request.is(Command.HELP)) {
@@ -20,7 +22,7 @@ public class BotService {
         }
 
         if (request.is(Command.ROLE)) {
-            CustomDate customDate = CustomDate.of(request.getTimestamp());
+            CustomDate customDate = customDateFactory.nowDate();
             RoleMemberPairs roleMemberPairs = roleMemberPairsFactory.create();
             return new Response(customDate.text() + "일 `역할`입니다.\n\n" + roleMemberPairs.text());
         }

@@ -1,5 +1,7 @@
 package bar.cocktailpick.bartender.service;
 
+import bar.cocktailpick.bartender.domain.CustomDate;
+import bar.cocktailpick.bartender.domain.CustomDateFactory;
 import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
@@ -8,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,23 +29,25 @@ class BotServiceTest {
     private RoleMemberPairsFactory roleMemberPairsFactory;
 
     @Mock
+    private CustomDateFactory customDateFactory;
+
+    @Mock
     private RoleMemberPairs roleMemberPairs;
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(roleMemberPairsFactory);
+        botService = new BotService(roleMemberPairsFactory, customDateFactory);
     }
 
     @Test
     void serve_WhenReceiveRole() {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.ROLE)).thenReturn(true);
-        when(request.getTimestamp()).thenReturn("1504640775.000005");
+        when(customDateFactory.nowDate()).thenReturn(new CustomDate(LocalDate.of(2020, Month.AUGUST, 3)));
         when(roleMemberPairsFactory.create()).thenReturn(roleMemberPairs);
         when(roleMemberPairs.text()).thenReturn("천재 -> 그니");
 
-        System.out.println(botService.serve(request).getText());
-        assertThat(botService.serve(request).getText()).contains("천재 -> 그니", "01", "18");
+        assertThat(botService.serve(request).getText()).contains("천재 -> 그니", "08", "03");
     }
 
     @Test
