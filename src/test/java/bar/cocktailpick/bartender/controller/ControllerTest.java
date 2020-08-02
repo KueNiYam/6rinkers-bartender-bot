@@ -35,7 +35,7 @@ class ControllerTest {
     void rollingRole() throws Exception {
         given(rollingRoleService.rollingRole()).willReturn(new RollingRoleResponse("서기 -> 그니"));
 
-        mockMvc.perform(post("/rolling-role")
+        mockMvc.perform(post("/slack")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @RestController
-@RequestMapping("/rolling-role")
+@RequestMapping("/slack")
 public class Controller {
     private final RollingRoleService rollingRoleService;
 
