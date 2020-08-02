@@ -13,7 +13,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,16 +33,6 @@ class RollingRoleControllerTest {
 
     @Test
     void rollingRole() throws Exception {
-        given(rollingRoleService.rollingRole()).willReturn(new RollingRoleResponse("서기 -> 그니"));
-
-        mockMvc.perform(get("/rolling-role")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    void rollingRoleToSlack() throws Exception {
         given(rollingRoleService.rollingRole()).willReturn(new RollingRoleResponse("서기 -> 그니"));
 
         mockMvc.perform(post("/rolling-role")

@@ -5,7 +5,6 @@ import bar.cocktailpick.bartender.rollingRole.service.RollingRoleService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RollingRoleController {
     private final RollingRoleService rollingRoleService;
 
-    @GetMapping
-    public ResponseEntity<RollingRoleResponse> rollingRole() {
-        return ResponseEntity.ok(rollingRoleService.rollingRole());
-    }
-
     @PostMapping
-    public ResponseEntity<RollingRoleResponse> rollingRoleToSlack() {
+    public ResponseEntity<RollingRoleResponse> rollingRole() {
         return ResponseEntity.ok(rollingRoleService.rollingRole());
     }
 }
