@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.rollingRole.domain;
+package bar.cocktailpick.bartender.domain;
 
 public enum Role {
     COOK("👩‍🍳 취사병"),

@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.rollingRole.domain;
+package bar.cocktailpick.bartender.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;

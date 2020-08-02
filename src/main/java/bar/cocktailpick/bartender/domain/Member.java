@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.rollingRole.domain;
+package bar.cocktailpick.bartender.domain;
 
 public enum Member {
     TONEY("토니"),

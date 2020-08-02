@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.rollingRole.domain;
+package bar.cocktailpick.bartender.domain;
 
 public class RoleMemberPair {
     private final Member member;

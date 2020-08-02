@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.rollingRole.controller;
+package bar.cocktailpick.bartender.controller;
 
-import bar.cocktailpick.bartender.rollingRole.dto.RollingRoleResponse;
-import bar.cocktailpick.bartender.rollingRole.service.RollingRoleService;
+import bar.cocktailpick.bartender.dto.Response;
+import bar.cocktailpick.bartender.service.BotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,18 +12,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {RollingRoleController.class})
-class RollingRoleControllerTest {
+@WebMvcTest(controllers = {BotController.class})
+class BotControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private RollingRoleService rollingRoleService;
+    private BotService botService;
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext) {
@@ -33,21 +34,31 @@ class RollingRoleControllerTest {
     }
 
     @Test
-    void rollingRole() throws Exception {
-        given(rollingRoleService.rollingRole()).willReturn(new RollingRoleResponse("서기 -> 그니"));
+    void service() throws Exception {
+        given(botService.serve(any())).willReturn(new Response("서기 -> 그니"));
 
-        mockMvc.perform(get("/rolling-role")
-                .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/service")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("token=XXXXXXXXXXXXXXXXXX\n" +
+                        "team_id=T0001\n" +
+                        "team_domain=example\n" +
+                        "channel_id=C2147483705\n" +
+                        "channel_name=test\n" +
+                        "thread_ts=1504640714.003543\n" +
+                        "timestamp=1504640775.000005\n" +
+                        "user_id=U2147483697\n" +
+                        "user_name=Steve\n" +
+                        "text=googlebot: What is the air-speed velocity of an unladen swallow?\n" +
+                        "trigger_word=googlebot:"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
     @Test
-    void rollingRoleToSlack() throws Exception {
-        given(rollingRoleService.rollingRole()).willReturn(new RollingRoleResponse("서기 -> 그니"));
-
-        mockMvc.perform(post("/rolling-role")
-                .accept(MediaType.APPLICATION_JSON))
+    void hello() throws Exception {
+        mockMvc.perform(get("/hello")
+                .accept(MediaType.TEXT_PLAIN))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
