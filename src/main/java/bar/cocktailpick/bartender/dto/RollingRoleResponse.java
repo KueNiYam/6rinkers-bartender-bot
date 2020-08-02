@@ -1,6 +1,6 @@
-package bar.cocktailpick.bartender.rollingRole.dto;
+package bar.cocktailpick.bartender.dto;
 
-import bar.cocktailpick.bartender.rollingRole.domain.RoleMemberPairs;
+import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

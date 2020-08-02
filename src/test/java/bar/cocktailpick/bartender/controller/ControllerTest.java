@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.rollingRole.controller;
+package bar.cocktailpick.bartender.controller;
 
-import bar.cocktailpick.bartender.rollingRole.dto.RollingRoleResponse;
-import bar.cocktailpick.bartender.rollingRole.service.RollingRoleService;
+import bar.cocktailpick.bartender.dto.RollingRoleResponse;
+import bar.cocktailpick.bartender.service.RollingRoleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,8 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {RollingRoleController.class})
-class RollingRoleControllerTest {
+@WebMvcTest(controllers = {Controller.class})
+class ControllerTest {
     private MockMvc mockMvc;
 
     @MockBean

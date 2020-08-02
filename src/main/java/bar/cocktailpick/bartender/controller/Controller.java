@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.rollingRole.controller;
+package bar.cocktailpick.bartender.controller;
 
-import bar.cocktailpick.bartender.rollingRole.dto.RollingRoleResponse;
-import bar.cocktailpick.bartender.rollingRole.service.RollingRoleService;
+import bar.cocktailpick.bartender.dto.RollingRoleResponse;
+import bar.cocktailpick.bartender.service.RollingRoleService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @RestController
 @RequestMapping("/rolling-role")
-public class RollingRoleController {
+public class Controller {
     private final RollingRoleService rollingRoleService;
 
     @PostMapping

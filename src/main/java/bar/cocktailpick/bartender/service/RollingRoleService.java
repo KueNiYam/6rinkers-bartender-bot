@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.rollingRole.service;
+package bar.cocktailpick.bartender.service;
 
-import bar.cocktailpick.bartender.rollingRole.domain.RoleMemberPairsFactory;
-import bar.cocktailpick.bartender.rollingRole.dto.RollingRoleResponse;
+import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
+import bar.cocktailpick.bartender.dto.RollingRoleResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

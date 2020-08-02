@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.rollingRole.service;
+package bar.cocktailpick.bartender.service;
 
-import bar.cocktailpick.bartender.rollingRole.domain.RoleMemberPairs;
-import bar.cocktailpick.bartender.rollingRole.domain.RoleMemberPairsFactory;
+import bar.cocktailpick.bartender.domain.RoleMemberPairs;
+import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
