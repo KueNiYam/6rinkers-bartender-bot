@@ -56,8 +56,9 @@ class BotServiceTest {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.REVIEW)).thenReturn(true);
         when(request.getUser_name()).thenReturn("그니");
+        when(request.getChannel_id()).thenReturn("C2147483705");
 
-        assertThat(botService.serve(request).getText()).contains("@channel", "리뷰", "그니");
+        assertThat(botService.serve(request).getText()).contains("<@C2147483705>", "리뷰", "그니");
     }
 
     @Test
