@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +18,11 @@ public class RollingRoleController {
 
     @GetMapping
     public ResponseEntity<RollingRoleResponse> rollingRole() {
-        System.out.println("?");
+        return ResponseEntity.ok(rollingRoleService.rollingRole());
+    }
+
+    @PostMapping
+    public ResponseEntity<RollingRoleResponse> rollingRoleToSlack() {
         return ResponseEntity.ok(rollingRoleService.rollingRole());
     }
 }
-
-
