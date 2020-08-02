@@ -35,7 +35,7 @@ class BotServiceTest {
     void serve_WhenReceiveRole() {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.ROLE)).thenReturn(true);
-        when(request.getTime_stamp()).thenReturn("1504640775.000005");
+        when(request.getTimestamp()).thenReturn("1504640775.000005");
         when(roleMemberPairsFactory.create()).thenReturn(roleMemberPairs);
         when(roleMemberPairs.text()).thenReturn("천재 -> 그니");
 

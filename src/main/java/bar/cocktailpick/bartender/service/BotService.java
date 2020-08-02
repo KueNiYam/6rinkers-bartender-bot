@@ -20,7 +20,7 @@ public class BotService {
         }
 
         if (request.is(Command.ROLE)) {
-            CustomDate customDate = CustomDate.now();
+            CustomDate customDate = CustomDate.of(request.getTimestamp());
             RoleMemberPairs roleMemberPairs = roleMemberPairsFactory.create();
             return new Response(customDate.text() + "일 역할입니다.\n\n" + roleMemberPairs.text());
         }

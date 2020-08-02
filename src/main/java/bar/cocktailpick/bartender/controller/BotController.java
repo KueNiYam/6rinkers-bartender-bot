@@ -20,8 +20,7 @@ public class BotController {
         if (request.isBot()) {
             return ResponseEntity.noContent().build();
         }
-
-        System.out.println(request);
+        System.out.println("\n" + request + "\n");
         return ResponseEntity.ok(botService.serve(request));
     }
 
