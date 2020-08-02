@@ -26,7 +26,7 @@ public class BotService {
         }
 
         if (request.is(Command.REVIEW)) {
-            return new Response(String.format("<@%s> \n여러분 제발 `%s` 리뷰 좀 봐주세요. ㅠㅠ 😭", request.getChannel_name(), request.getUser_name()));
+            return new Response(String.format("<!channel> \n여러분 제발 `%s` 리뷰 좀 봐주세요. ㅠㅠ 😭", request.getUser_name()));
         }
 
         if (request.is(Command.HELLO)) {
