@@ -9,18 +9,18 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Request {
     private String token;
-    private String teamId;
-    private String teamDomain;
-    private String channelId;
-    private String channelName;
-    private String threadTs;
-    private Double timeStamp;
-    private String userId;
-    private String userName;
+    private String team_id;
+    private String team_domain;
+    private String channel_id;
+    private String channel_name;
+    private String thread_ts;
+    private Double time_stamp;
+    private String user_id;
+    private String user_name;
     private String text;
-    private String triggerWord;
+    private String trigger_word;
 
     public boolean is(Command help) {
-        return help.is(triggerWord);
+        return help.is(trigger_word);
     }
 }

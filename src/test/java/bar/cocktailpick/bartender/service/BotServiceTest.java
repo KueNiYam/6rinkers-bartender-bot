@@ -54,7 +54,7 @@ class BotServiceTest {
     void serve_WhenReceiveReview() {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.REVIEW)).thenReturn(true);
-        when(request.getUserName()).thenReturn("그니");
+        when(request.getUser_name()).thenReturn("그니");
 
         assertThat(botService.serve(request).getText()).contains("@channel", "리뷰", "그니");
     }
@@ -63,7 +63,7 @@ class BotServiceTest {
     void serve_WhenReceiveHello() {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.HELLO)).thenReturn(true);
-        when(request.getUserName()).thenReturn("그니");
+        when(request.getUser_name()).thenReturn("그니");
 
         assertThat(botService.serve(request).getText()).contains("안녕하세요", "명령", "도움", "그니");
     }

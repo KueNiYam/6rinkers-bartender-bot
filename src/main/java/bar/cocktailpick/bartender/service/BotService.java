@@ -22,11 +22,11 @@ public class BotService {
         }
 
         if (request.is(Command.REVIEW)) {
-            return new Response(String.format("@channel\n제발 %s 리뷰 좀 봐주세요. ㅠㅠ", request.getUserName()));
+            return new Response(String.format("@channel\n제발 %s 리뷰 좀 봐주세요. ㅠㅠ", request.getUser_name()));
         }
 
         if (request.is(Command.HELLO)) {
-            return new Response(String.format("안녕하세요, %s님. 무엇을 도와드릴까요?\n명령은 \"도움\"으로 확인할 수 있습니다.", request.getUserName()));
+            return new Response(String.format("안녕하세요, %s님. 무엇을 도와드릴까요?\n명령은 \"도움\"으로 확인할 수 있습니다.", request.getUser_name()));
         }
 
         return new Response("아직 구현되지 않았어요. ㅠㅠ");
