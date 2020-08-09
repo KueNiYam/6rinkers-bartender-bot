@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public class RoleMemberPairsFactory {
-    public RoleMemberPairs create() {
+    public RoleMemberPairs shuffle() {
         List<Member> members = Arrays.asList(Member.values());
         Collections.shuffle(members);
 

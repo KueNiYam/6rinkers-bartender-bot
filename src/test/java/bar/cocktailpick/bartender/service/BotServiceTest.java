@@ -1,8 +1,6 @@
 package bar.cocktailpick.bartender.service;
 
-import bar.cocktailpick.bartender.domain.RoleMemberPair;
-import bar.cocktailpick.bartender.domain.RoleMemberPairs;
-import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
+import bar.cocktailpick.bartender.domain.*;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.service.BotService.Command;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,17 +20,20 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private Request request;
+    private RoleMemberPairsFactory roleMemberPairsFactory;
 
     @Mock
-    private RoleMemberPairsFactory roleMemberPairsFactory;
+    private MemberFactory memberFactory;
+
+    @Mock
+    private Request request;
 
     @Mock
     private RoleMemberPair roleMemberPair;
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(roleMemberPairsFactory);
+        botService = new BotService(roleMemberPairsFactory, memberFactory);
     }
 
     @Test
@@ -41,9 +42,11 @@ class BotServiceTest {
 
         when(request.isByTrigger(anyString())).thenReturn(false);
         when(request.isByTrigger("역할")).thenReturn(true);
-        when(roleMemberPairsFactory.create()).thenReturn(roleMemberPairs);
+        when(roleMemberPairsFactory.shuffle()).thenReturn(roleMemberPairs);
         when(roleMemberPair.getRoleName()).thenReturn("천재");
         when(roleMemberPair.getMemberName()).thenReturn("그니");
+        when(roleMemberPair.is(Role.MASTER)).thenReturn(true);
+        when(roleMemberPair.is(Role.LEADER)).thenReturn(true);
 
         assertThat(botService.serve(request).getText()).contains("천재 -> 그니");
     }
@@ -63,6 +66,15 @@ class BotServiceTest {
         when(request.getUser_name()).thenReturn("그니");
 
         assertThat(botService.serve(request).getText()).contains("channel", "리뷰", "그니");
+    }
+
+    @Test
+    void serve_WhenReceiveDraw() {
+        when(request.isByTrigger(anyString())).thenReturn(false);
+        when(request.isByTrigger("뽑기")).thenReturn(true);
+        when(memberFactory.random()).thenReturn(Member.KUENI);
+
+        assertThat(botService.serve(request).getText()).contains("그니");
     }
 
     @Test

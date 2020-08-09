@@ -1,5 +1,6 @@
 package bar.cocktailpick.bartender.service;
 
+import bar.cocktailpick.bartender.domain.MemberFactory;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.dto.Response;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class BotService {
     private final RoleMemberPairsFactory roleMemberPairsFactory;
+    private final MemberFactory memberFactory;
 
     public Response serve(Request request) {
         return Command.find(request)
@@ -27,11 +29,15 @@ public class BotService {
     }
 
     private Response role(Request request) {
-        return Response.ofRole(roleMemberPairsFactory.create());
+        return Response.ofRole(roleMemberPairsFactory.shuffle());
     }
 
     private Response review(Request request) {
         return Response.ofReview(request.getUser_name());
+    }
+
+    private Response draw(Request request) {
+        return Response.ofDraw(memberFactory.random());
     }
 
     private Response hello(Request request) {
@@ -42,7 +48,8 @@ public class BotService {
         HELP("도움", BotService::help),
         ROLE("역할", BotService::role),
         REVIEW("리뷰", BotService::review),
-        HELLO("안녕", BotService::hello);
+        HELLO("안녕", BotService::hello),
+        DRAW("뽑기", BotService::draw);
 
         private final String trigger;
         private final BiFunction<BotService, Request, Response> behavior;

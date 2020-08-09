@@ -17,4 +17,16 @@ public class MarkdownUtils {
     public static String toChannel() {
         return "<!channel>";
     }
+
+    public static String bold(String string) {
+        return String.format(" *%s* ", string);
+    }
+
+    public static String ul(String string) {
+        return "• " + string;
+    }
+
+    public static String blockQuote(String string) {
+        return "&gt;  " + string;
+    }
 }
