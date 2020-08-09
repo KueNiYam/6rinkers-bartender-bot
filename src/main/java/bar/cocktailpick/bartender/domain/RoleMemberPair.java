@@ -9,15 +9,12 @@ public class RoleMemberPair {
         this.member = member;
     }
 
-    public Member getMember() {
-        return member;
+    public String getMemberName() {
+        return member.getMemberName();
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoleName() {
+        return role.getRoleName();
     }
 
-    public String text() {
-        return role.getRoleName() + " -> " + member.getMemberName() + "\n";
-    }
 }

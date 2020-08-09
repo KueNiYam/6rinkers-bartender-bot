@@ -1,7 +1,6 @@
 package bar.cocktailpick.bartender.service;
 
-import bar.cocktailpick.bartender.domain.CustomDate;
-import bar.cocktailpick.bartender.domain.CustomDateFactory;
+import bar.cocktailpick.bartender.domain.RoleMemberPair;
 import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
@@ -11,8 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,25 +27,24 @@ class BotServiceTest {
     private RoleMemberPairsFactory roleMemberPairsFactory;
 
     @Mock
-    private CustomDateFactory customDateFactory;
-
-    @Mock
-    private RoleMemberPairs roleMemberPairs;
+    private RoleMemberPair roleMemberPair;
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(roleMemberPairsFactory, customDateFactory);
+        botService = new BotService(roleMemberPairsFactory);
     }
 
     @Test
     void serve_WhenReceiveRole() {
+        RoleMemberPairs roleMemberPairs = new RoleMemberPairs(Collections.singletonList(roleMemberPair));
+
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.ROLE)).thenReturn(true);
-        when(customDateFactory.nowDate()).thenReturn(new CustomDate(LocalDate.of(2020, Month.AUGUST, 3)));
         when(roleMemberPairsFactory.create()).thenReturn(roleMemberPairs);
-        when(roleMemberPairs.text()).thenReturn("천재 -> 그니");
+        when(roleMemberPair.getRoleName()).thenReturn("천재");
+        when(roleMemberPair.getMemberName()).thenReturn("그니");
 
-        assertThat(botService.serve(request).getText()).contains("천재 -> 그니", "08", "03");
+        assertThat(botService.serve(request).getText()).contains("천재 -> 그니");
     }
 
     @Test
@@ -55,7 +52,7 @@ class BotServiceTest {
         when(request.is(any())).thenReturn(false);
         when(request.is(Command.HELP)).thenReturn(true);
 
-        assertThat(botService.serve(request).getText()).contains(Command.commands());
+        assertThat(botService.serve(request).getText()).contains(Command.triggers());
     }
 
     @Test

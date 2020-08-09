@@ -1,8 +1,11 @@
 package bar.cocktailpick.bartender.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.Getter;
 
+import java.util.List;
+import java.util.stream.Stream;
+
+@Getter
 public class RoleMemberPairs {
     private final List<RoleMemberPair> roleMemberPairs;
 
@@ -10,9 +13,7 @@ public class RoleMemberPairs {
         this.roleMemberPairs = roleMemberPairs;
     }
 
-    public String text() {
-        return roleMemberPairs.stream()
-                .map(RoleMemberPair::text)
-                .collect(Collectors.joining());
+    public Stream<RoleMemberPair> stream() {
+        return roleMemberPairs.stream();
     }
 }
