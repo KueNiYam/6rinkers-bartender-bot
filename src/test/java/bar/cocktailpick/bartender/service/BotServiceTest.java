@@ -3,6 +3,8 @@ package bar.cocktailpick.bartender.service;
 import bar.cocktailpick.bartender.domain.*;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.service.BotService.Command;
+import bar.cocktailpick.bartender.service.api.SlackApi;
+import bar.cocktailpick.bartender.service.dto.UserProfileResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,14 +28,20 @@ class BotServiceTest {
     private MemberFactory memberFactory;
 
     @Mock
+    private SlackApi slackApi;
+
+    @Mock
     private Request request;
 
     @Mock
     private RoleMemberPair roleMemberPair;
 
+    @Mock
+    private UserProfileResponse userProfileResponse;
+
     @BeforeEach
     void setUp() {
-        botService = new BotService(roleMemberPairsFactory, memberFactory);
+        botService = new BotService(roleMemberPairsFactory, memberFactory, slackApi);
     }
 
     @Test
@@ -63,7 +71,10 @@ class BotServiceTest {
     void serve_WhenReceiveReview() {
         when(request.isByTrigger(anyString())).thenReturn(false);
         when(request.isByTrigger("리뷰")).thenReturn(true);
-        when(request.getUser_name()).thenReturn("그니");
+        when(request.getUser_id()).thenReturn("u12345678");
+        when(slackApi.getProfile("u12345678")).thenReturn(userProfileResponse);
+        when(userProfileResponse.isOk()).thenReturn(true);
+        when(userProfileResponse.displayName()).thenReturn("그니");
 
         assertThat(botService.serve(request).getText()).contains("channel", "리뷰", "그니");
     }

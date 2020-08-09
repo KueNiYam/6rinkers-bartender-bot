@@ -46,7 +46,7 @@ public class Response {
 
     public static Response ofReview(String userName) {
         String message = MarkdownUtils.blockQuote(String.format("%s가 %s을 보냈습니다. \uD83D\uDE80",
-                MarkdownUtils.code(userName), MarkdownUtils.bold("리뷰 요청")));
+                MarkdownUtils.bold(userName), MarkdownUtils.bold("리뷰 요청")));
 
         return new Response(MarkdownUtils.toChannel() + "\n" + message);
     }

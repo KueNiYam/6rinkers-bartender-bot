@@ -22,7 +22,6 @@ public class BotController {
         if (request.isByBot()) {
             return ResponseEntity.noContent().build();
         }
-        System.out.println("\n" + request + "\n");
         return ResponseEntity.ok(botService.serve(request));
     }
 

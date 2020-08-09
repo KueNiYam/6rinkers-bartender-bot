@@ -4,7 +4,8 @@ import bar.cocktailpick.bartender.domain.MemberFactory;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.dto.Response;
-import lombok.AccessLevel;
+import bar.cocktailpick.bartender.service.api.SlackApi;
+import bar.cocktailpick.bartender.service.dto.UserProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,12 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor
 @Service
 public class BotService {
     private final RoleMemberPairsFactory roleMemberPairsFactory;
     private final MemberFactory memberFactory;
+    private final SlackApi slackApi;
 
     public Response serve(Request request) {
         return Command.find(request)
@@ -33,7 +35,13 @@ public class BotService {
     }
 
     private Response review(Request request) {
-        return Response.ofReview(request.getUser_name());
+        UserProfileResponse userProfileResponse = slackApi.getProfile(request.getUser_id());
+
+        if (userProfileResponse.isOk()) {
+            return Response.ofReview(userProfileResponse.displayName());
+        }
+
+        return new Response("slackApi에서 displayName을 찾을 수 없습니다.");
     }
 
     private Response draw(Request request) {
