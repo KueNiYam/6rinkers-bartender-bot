@@ -9,6 +9,10 @@ public class RoleMemberPair {
         this.member = member;
     }
 
+    public boolean is(Role role) {
+        return this.role == role;
+    }
+
     public String getMemberName() {
         return member.getMemberName();
     }
@@ -16,5 +20,4 @@ public class RoleMemberPair {
     public String getRoleName() {
         return role.getRoleName();
     }
-
 }

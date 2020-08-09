@@ -13,6 +13,13 @@ public class RoleMemberPairs {
         this.roleMemberPairs = roleMemberPairs;
     }
 
+    public RoleMemberPair find(Role role) {
+        return roleMemberPairs.stream()
+                .filter(roleMemberPair -> roleMemberPair.is(role))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%s가 없습니다.", role)));
+    }
+
     public Stream<RoleMemberPair> stream() {
         return roleMemberPairs.stream();
     }

@@ -13,4 +13,8 @@ public class MarkdownUtils {
                 .map(MarkdownUtils::code)
                 .collect(Collectors.toList());
     }
+
+    public static String toChannel() {
+        return "<!channel>";
+    }
 }

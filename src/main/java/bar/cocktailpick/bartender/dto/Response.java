@@ -1,5 +1,7 @@
 package bar.cocktailpick.bartender.dto;
 
+import bar.cocktailpick.bartender.domain.Role;
+import bar.cocktailpick.bartender.domain.RoleMemberPair;
 import bar.cocktailpick.bartender.domain.RoleMemberPairs;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
 import lombok.*;
@@ -24,21 +26,30 @@ public class Response {
     }
 
     public static Response ofRole(RoleMemberPairs roleMemberPairs) {
-        String text = roleMemberPairs.stream()
+        String roles = roleMemberPairs.stream()
                 .map(roleMemberPair -> roleMemberPair.getRoleName() + " -> " + roleMemberPair.getMemberName())
                 .collect(Collectors.joining("\n"));
 
-        return new Response(text);
+        RoleMemberPair masterMember = roleMemberPairs.find(Role.MASTER);
+        RoleMemberPair leaderMember = roleMemberPairs.find(Role.LEADER);
+
+        String text = String.format("\n %s %s는 데일리 회의록을, %s %s는 회의록을 작성해주세요."
+                , masterMember.getRoleName(), masterMember.getMemberName()
+                , leaderMember.getRoleName(), leaderMember.getMemberName());
+
+        return new Response(roles + text);
     }
 
     public static Response ofReview(String userName) {
-        String text = String.format("<!channel> \n여러분 제발 `%s` 리뷰 좀 봐주세요. ㅠㅠ 😭", userName);
+        String text = String.format("%s \n %s가 리뷰 요청을 보냈습니다. 🚀",
+                MarkdownUtils.toChannel(), MarkdownUtils.code(userName));
 
         return new Response(text);
     }
 
     public static Response ofHello(String userName) {
-        String text = String.format("안녕하세요, `%s`님. 무엇을 도와드릴까요? 🧛‍♂️\n명령은 `도움`으로 확인할 수 있습니다.", userName);
+        String text = String.format("안녕하세요, %s님. 무엇을 도와드릴까요? 🧛‍♂️\n명령은 `도움`으로 확인할 수 있습니다."
+                , MarkdownUtils.code(userName));
 
         return new Response(text);
     }
