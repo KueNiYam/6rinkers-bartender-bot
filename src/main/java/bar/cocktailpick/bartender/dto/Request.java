@@ -1,7 +1,8 @@
 package bar.cocktailpick.bartender.dto;
 
-import bar.cocktailpick.bartender.service.Command;
 import lombok.*;
+
+import java.util.Objects;
 
 @Getter
 @ToString
@@ -20,11 +21,11 @@ public class Request {
     private String text;
     private String trigger_word;
 
-    public boolean is(Command help) {
-        return help.is(trigger_word);
+    public boolean isByTrigger(String trigger) {
+        return Objects.equals(trigger_word, trigger);
     }
 
-    public boolean isBot() {
+    public boolean isByBot() {
         return "USLACKBOT".equals(user_id) || "slackbot".equals(user_name);
     }
 }

@@ -17,7 +17,7 @@ public class BotController {
 
     @PostMapping("/service")
     public ResponseEntity<Response> service(Request request) {
-        if (request.isBot()) {
+        if (request.isByBot()) {
             return ResponseEntity.noContent().build();
         }
         System.out.println("\n" + request + "\n");
