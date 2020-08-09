@@ -25,7 +25,7 @@ public class BotService {
     }
 
     private Response help(Request request) {
-        return Response.ofHelp(Command.triggers());
+        return Response.ofHelp(Command.sortedTriggers());
     }
 
     private Response role(Request request) {
@@ -59,9 +59,10 @@ public class BotService {
             this.behavior = behavior;
         }
 
-        public static List<String> triggers() {
+        public static List<String> sortedTriggers() {
             return Arrays.stream(values())
                     .map(command -> command.trigger)
+                    .sorted()
                     .collect(Collectors.toList());
         }
 

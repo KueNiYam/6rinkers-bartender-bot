@@ -53,7 +53,7 @@ public class Response {
 
     public static Response ofDraw(Member random) {
         String text = String.format("축하합니다. %s님께서 당첨되셨습니다. \uD83C\uDF89\uD83C\uDF89\uD83C\uDF89",
-                MarkdownUtils.blockQuote(random.getMemberName()));
+                MarkdownUtils.bold(random.getMemberName()));
         return new Response(text);
     }
 

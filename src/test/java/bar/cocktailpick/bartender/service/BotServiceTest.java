@@ -56,7 +56,7 @@ class BotServiceTest {
         when(request.isByTrigger(anyString())).thenReturn(false);
         when(request.isByTrigger("도움")).thenReturn(true);
 
-        assertThat(botService.serve(request).getText()).contains(Command.triggers());
+        assertThat(botService.serve(request).getText()).contains(Command.sortedTriggers());
     }
 
     @Test
