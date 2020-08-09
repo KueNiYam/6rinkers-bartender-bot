@@ -8,19 +8,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @RestController
+@RequestMapping("/api")
 public class BotController {
     private final BotService botService;
 
-    @PostMapping("/service")
+    @PostMapping("/bot")
     public ResponseEntity<Response> service(Request request) {
-        if (request.isBot()) {
+        if (request.isByBot()) {
             return ResponseEntity.noContent().build();
         }
-        System.out.println("\n" + request + "\n");
         return ResponseEntity.ok(botService.serve(request));
     }
 

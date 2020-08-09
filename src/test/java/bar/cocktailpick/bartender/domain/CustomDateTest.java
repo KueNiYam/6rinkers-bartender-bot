@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,6 +27,6 @@ class CustomDateTest {
     @Test
     void text() {
         CustomDate customDate = new CustomDate(LocalDate.of(2020, Month.AUGUST, 3));
-        assertThat(customDate.text()).isEqualTo("08/03");
+        assertThat(customDate.text(DateTimeFormatter.ofPattern("MM/dd"))).isEqualTo("08/03");
     }
 }

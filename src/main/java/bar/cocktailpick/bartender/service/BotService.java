@@ -1,40 +1,90 @@
 package bar.cocktailpick.bartender.service;
 
-import bar.cocktailpick.bartender.domain.CustomDate;
-import bar.cocktailpick.bartender.domain.CustomDateFactory;
-import bar.cocktailpick.bartender.domain.RoleMemberPairs;
+import bar.cocktailpick.bartender.domain.MemberFactory;
 import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.dto.Response;
-import lombok.AccessLevel;
+import bar.cocktailpick.bartender.service.api.SlackApi;
+import bar.cocktailpick.bartender.service.dto.UserProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
 @Service
 public class BotService {
     private final RoleMemberPairsFactory roleMemberPairsFactory;
-    private final CustomDateFactory customDateFactory;
+    private final MemberFactory memberFactory;
+    private final SlackApi slackApi;
 
     public Response serve(Request request) {
-        if (request.is(Command.HELP)) {
-            return new Response("저에게 내릴 수 있는 `명령 목록`입니다.\n\n" + Command.commands());
+        return Command.find(request)
+                .behavior.apply(this, request);
+    }
+
+    private Response help(Request request) {
+        return Response.ofHelp(Command.sortedTriggers());
+    }
+
+    private Response role(Request request) {
+        return Response.ofRole(roleMemberPairsFactory.shuffle());
+    }
+
+    private Response review(Request request) {
+        UserProfileResponse userProfileResponse = slackApi.getProfile(request.getUser_id());
+
+        if (userProfileResponse.isOk()) {
+            return Response.ofReview(userProfileResponse.displayName());
         }
 
-        if (request.is(Command.ROLE)) {
-            CustomDate customDate = customDateFactory.nowDate();
-            RoleMemberPairs roleMemberPairs = roleMemberPairsFactory.create();
-            return new Response(customDate.text() + "일 `역할`입니다.\n\n" + roleMemberPairs.text());
+        return Response.displayNameNotFound();
+    }
+
+    private Response draw(Request request) {
+        return Response.ofDraw(memberFactory.random());
+    }
+
+    private Response hello(Request request) {
+        UserProfileResponse userProfileResponse = slackApi.getProfile(request.getUser_id());
+
+        if (userProfileResponse.isOk()) {
+            return Response.ofHello(userProfileResponse.displayName());
         }
 
-        if (request.is(Command.REVIEW)) {
-            return new Response(String.format("<!channel> \n여러분 제발 `%s` 리뷰 좀 봐주세요. ㅠㅠ 😭", request.getUser_name()));
+        return Response.displayNameNotFound();
+    }
+
+    public enum Command {
+        HELP("도움", BotService::help),
+        ROLE("역할", BotService::role),
+        REVIEW("리뷰", BotService::review),
+        HELLO("안녕", BotService::hello),
+        DRAW("뽑기", BotService::draw);
+
+        private final String trigger;
+        private final BiFunction<BotService, Request, Response> behavior;
+
+        Command(String trigger, BiFunction<BotService, Request, Response> behavior) {
+            this.trigger = trigger;
+            this.behavior = behavior;
         }
 
-        if (request.is(Command.HELLO)) {
-            return new Response(String.format("안녕하세요, `%s`님. 무엇을 도와드릴까요? 🧛‍♂️\n명령은 `도움`으로 확인할 수 있습니다.", request.getUser_name()));
+        public static List<String> sortedTriggers() {
+            return Arrays.stream(values())
+                    .map(command -> command.trigger)
+                    .sorted()
+                    .collect(Collectors.toList());
         }
 
-        return new Response("아직 구현되지 않았거나 버그입니다. 그니(01074522525)로 연락주세요. ㅠㅠ 😭");
+        public static Command find(Request request) {
+            return Arrays.stream(values())
+                    .filter(command -> request.isByTrigger(command.trigger))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("처리할 수 있는 요청이 아닙니다."));
+        }
     }
 }

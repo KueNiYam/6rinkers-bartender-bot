@@ -37,7 +37,7 @@ class BotControllerTest {
     void service() throws Exception {
         given(botService.serve(any())).willReturn(new Response("서기 -> 그니"));
 
-        mockMvc.perform(post("/service")
+        mockMvc.perform(post("/api/bot")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
                 .content("token=XXXXXXXXXXXXXXXXXX\n" +
@@ -57,7 +57,7 @@ class BotControllerTest {
 
     @Test
     void hello() throws Exception {
-        mockMvc.perform(get("/hello")
+        mockMvc.perform(get("/api/hello")
                 .accept(MediaType.TEXT_PLAIN))
                 .andExpect(status().isOk())
                 .andDo(print());
