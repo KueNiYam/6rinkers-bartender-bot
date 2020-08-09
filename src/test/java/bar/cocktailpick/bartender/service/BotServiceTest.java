@@ -92,7 +92,10 @@ class BotServiceTest {
     void serve_WhenReceiveHello() {
         when(request.isByTrigger(anyString())).thenReturn(false);
         when(request.isByTrigger("안녕")).thenReturn(true);
-        when(request.getUser_name()).thenReturn("그니");
+        when(request.getUser_id()).thenReturn("u12345678");
+        when(slackApi.getProfile("u12345678")).thenReturn(userProfileResponse);
+        when(userProfileResponse.isOk()).thenReturn(true);
+        when(userProfileResponse.displayName()).thenReturn("그니");
 
         assertThat(botService.serve(request).getText()).contains("안녕하세요", "명령", "도움", "그니");
     }

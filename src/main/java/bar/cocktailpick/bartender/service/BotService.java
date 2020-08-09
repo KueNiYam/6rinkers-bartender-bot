@@ -41,7 +41,7 @@ public class BotService {
             return Response.ofReview(userProfileResponse.displayName());
         }
 
-        return new Response("slackApi에서 displayName을 찾을 수 없습니다.");
+        return Response.displayNameNotFound();
     }
 
     private Response draw(Request request) {
@@ -49,7 +49,13 @@ public class BotService {
     }
 
     private Response hello(Request request) {
-        return Response.ofHello(request.getUser_name());
+        UserProfileResponse userProfileResponse = slackApi.getProfile(request.getUser_id());
+
+        if (userProfileResponse.isOk()) {
+            return Response.ofHello(userProfileResponse.displayName());
+        }
+
+        return Response.displayNameNotFound();
     }
 
     public enum Command {

@@ -59,9 +59,13 @@ public class Response {
 
     public static Response ofHello(String userName) {
         String text = String.format("안녕하세요, %s님. 무엇을 도와드릴까요? 🧛‍♂️\n명령은 `도움`으로 확인할 수 있습니다.",
-                MarkdownUtils.code(userName));
+                MarkdownUtils.bold(userName));
 
         return new Response(text);
+    }
+
+    public static Response displayNameNotFound() {
+        return new Response("slackApi에서 displayName을 찾을 수 없습니다.");
     }
 
     public static Response ofElse() {
