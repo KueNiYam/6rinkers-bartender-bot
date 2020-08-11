@@ -10,4 +10,5 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HookRequest {
     List<AttachmentRequest> attachments;
+
 }
