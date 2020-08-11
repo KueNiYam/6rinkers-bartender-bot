@@ -1,6 +1,6 @@
-package bar.cocktailpick.bartender.service.api;
+package bar.cocktailpick.bartender.api;
 
-import bar.cocktailpick.bartender.service.dto.UserProfileResponse;
+import bar.cocktailpick.bartender.api.dto.UserProfileResponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

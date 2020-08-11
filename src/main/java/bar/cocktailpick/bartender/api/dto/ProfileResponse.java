@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.service.dto;
+package bar.cocktailpick.bartender.api.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;

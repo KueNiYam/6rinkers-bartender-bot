@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.dto;
+package bar.cocktailpick.bartender.web.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Request {
+public class BotRequest {
     private String token;
     private String team_id;
     private String team_domain;
