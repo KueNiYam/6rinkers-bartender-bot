@@ -2,8 +2,8 @@ package bar.cocktailpick.bartender.dto;
 
 import bar.cocktailpick.bartender.domain.Member;
 import bar.cocktailpick.bartender.domain.Role;
-import bar.cocktailpick.bartender.domain.RoleMemberPair;
-import bar.cocktailpick.bartender.domain.RoleMemberPairs;
+import bar.cocktailpick.bartender.domain.RoleMember;
+import bar.cocktailpick.bartender.domain.RoleMembers;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
 import lombok.*;
 
@@ -27,13 +27,13 @@ public class Response {
         return new Response(message + MarkdownUtils.blockQuote(list));
     }
 
-    public static Response ofRole(RoleMemberPairs roleMemberPairs) {
-        String roles = roleMemberPairs.stream()
-                .map(roleMemberPair -> roleMemberPair.getRoleName() + " -> " + roleMemberPair.getMemberName())
+    public static Response ofRole(RoleMembers roleMembers) {
+        String roles = roleMembers.stream()
+                .map(roleMember -> roleMember.getRoleName() + " -> " + roleMember.getMemberName())
                 .collect(Collectors.joining("\n"));
 
-        RoleMemberPair masterMember = roleMemberPairs.find(Role.MASTER);
-        RoleMemberPair leaderMember = roleMemberPairs.find(Role.LEADER);
+        RoleMember masterMember = roleMembers.find(Role.MASTER);
+        RoleMember leaderMember = roleMembers.find(Role.LEADER);
 
         String message = String.format("%s %s은(는) 데일리 회의록을, %s %s은(는) 회의록을 작성해주세요.",
                 MarkdownUtils.bold(masterMember.getRoleName()), MarkdownUtils.code(masterMember.getMemberName()),

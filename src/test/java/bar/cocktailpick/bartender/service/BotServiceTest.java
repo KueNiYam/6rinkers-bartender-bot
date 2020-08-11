@@ -22,7 +22,7 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private RoleMemberPairsFactory roleMemberPairsFactory;
+    private RoleMembersFactory shuffledRoleMembersFactory;
 
     @Mock
     private MemberFactory memberFactory;
@@ -34,27 +34,27 @@ class BotServiceTest {
     private Request request;
 
     @Mock
-    private RoleMemberPair roleMemberPair;
+    private RoleMember roleMember;
 
     @Mock
     private UserProfileResponse userProfileResponse;
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(roleMemberPairsFactory, memberFactory, slackApi);
+        botService = new BotService(shuffledRoleMembersFactory, memberFactory, slackApi);
     }
 
     @Test
     void serve_WhenReceiveRole() {
-        RoleMemberPairs roleMemberPairs = new RoleMemberPairs(Collections.singletonList(roleMemberPair));
+        RoleMembers roleMembers = new RoleMembers(Collections.singletonList(roleMember));
 
         when(request.isByTrigger(anyString())).thenReturn(false);
         when(request.isByTrigger("역할")).thenReturn(true);
-        when(roleMemberPairsFactory.shuffle()).thenReturn(roleMemberPairs);
-        when(roleMemberPair.getRoleName()).thenReturn("천재");
-        when(roleMemberPair.getMemberName()).thenReturn("그니");
-        when(roleMemberPair.is(Role.MASTER)).thenReturn(true);
-        when(roleMemberPair.is(Role.LEADER)).thenReturn(true);
+        when(shuffledRoleMembersFactory.shuffled()).thenReturn(roleMembers);
+        when(roleMember.getRoleName()).thenReturn("천재");
+        when(roleMember.getMemberName()).thenReturn("그니");
+        when(roleMember.is(Role.MASTER)).thenReturn(true);
+        when(roleMember.is(Role.LEADER)).thenReturn(true);
 
         assertThat(botService.serve(request).getText()).contains("천재 -> 그니");
     }

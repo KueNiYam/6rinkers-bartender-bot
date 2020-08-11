@@ -1,7 +1,7 @@
 package bar.cocktailpick.bartender.service;
 
 import bar.cocktailpick.bartender.domain.MemberFactory;
-import bar.cocktailpick.bartender.domain.RoleMemberPairsFactory;
+import bar.cocktailpick.bartender.domain.RoleMembersFactory;
 import bar.cocktailpick.bartender.dto.Request;
 import bar.cocktailpick.bartender.dto.Response;
 import bar.cocktailpick.bartender.service.api.SlackApi;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class BotService {
-    private final RoleMemberPairsFactory roleMemberPairsFactory;
+    private final RoleMembersFactory roleMembersFactory;
     private final MemberFactory memberFactory;
     private final SlackApi slackApi;
 
@@ -31,7 +31,7 @@ public class BotService {
     }
 
     private Response role(Request request) {
-        return Response.ofRole(roleMemberPairsFactory.shuffle());
+        return Response.ofRole(roleMembersFactory.shuffled());
     }
 
     private Response review(Request request) {
