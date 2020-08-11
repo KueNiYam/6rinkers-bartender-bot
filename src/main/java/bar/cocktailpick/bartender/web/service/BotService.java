@@ -1,7 +1,7 @@
 package bar.cocktailpick.bartender.web.service;
 
-import bar.cocktailpick.bartender.api.SlackApi;
-import bar.cocktailpick.bartender.api.dto.UserProfileResponse;
+import bar.cocktailpick.bartender.api.slackapi.SlackApi;
+import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.domain.MemberFactory;
 import bar.cocktailpick.bartender.domain.RoleMembersFactory;
 import bar.cocktailpick.bartender.web.dto.BotRequest;
