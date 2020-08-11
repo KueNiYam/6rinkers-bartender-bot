@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.service;
+package bar.cocktailpick.bartender.web.service;
 
-import bar.cocktailpick.bartender.service.api.SlackApi;
-import bar.cocktailpick.bartender.service.dto.UserProfileResponse;
+import bar.cocktailpick.bartender.api.slackapi.SlackApi;
+import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

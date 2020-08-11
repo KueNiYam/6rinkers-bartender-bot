@@ -1,8 +1,8 @@
-package bar.cocktailpick.bartender.controller;
+package bar.cocktailpick.bartender.web;
 
-import bar.cocktailpick.bartender.dto.Request;
-import bar.cocktailpick.bartender.dto.Response;
-import bar.cocktailpick.bartender.service.BotService;
+import bar.cocktailpick.bartender.web.dto.BotRequest;
+import bar.cocktailpick.bartender.web.dto.BotResponse;
+import bar.cocktailpick.bartender.web.service.BotService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,11 @@ public class BotController {
     private final BotService botService;
 
     @PostMapping("/bot")
-    public ResponseEntity<Response> service(Request request) {
-        if (request.isByBot()) {
+    public ResponseEntity<BotResponse> service(BotRequest botRequest) {
+        if (botRequest.isByBot()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(botService.serve(request));
+        return ResponseEntity.ok(botService.serve(botRequest));
     }
 
     @GetMapping("/hello")

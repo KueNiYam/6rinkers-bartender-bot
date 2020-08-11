@@ -1,10 +1,10 @@
 package bar.cocktailpick.bartender.domain;
 
-public class RoleMemberPair {
+public class RoleMember {
     private final Member member;
     private final Role role;
 
-    public RoleMemberPair(Role role, Member member) {
+    public RoleMember(Role role, Member member) {
         this.role = role;
         this.member = member;
     }

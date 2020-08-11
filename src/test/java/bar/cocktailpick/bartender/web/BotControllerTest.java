@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.controller;
+package bar.cocktailpick.bartender.web;
 
-import bar.cocktailpick.bartender.dto.Response;
-import bar.cocktailpick.bartender.service.BotService;
+import bar.cocktailpick.bartender.web.dto.BotResponse;
+import bar.cocktailpick.bartender.web.service.BotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,7 +35,7 @@ class BotControllerTest {
 
     @Test
     void service() throws Exception {
-        given(botService.serve(any())).willReturn(new Response("서기 -> 그니"));
+        given(botService.serve(any())).willReturn(new BotResponse("서기 -> 그니"));
 
         mockMvc.perform(post("/api/bot")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
