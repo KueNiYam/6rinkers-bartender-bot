@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class SlackHook {
-    private final static String URL = "https://hooks.slack.com/services/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";
+    private final static String SLACK_HOOK_URL = System.getenv("SLACK_HOOK_URL");
 
     private final RestTemplate restTemplate;
 
@@ -27,7 +27,7 @@ public class SlackHook {
                 .thumb_url("https://newsimg.sedaily.com/2018/11/01/1S70RJ621K_1.jpg")
                 .build();
 
-        return restTemplate.postForObject(URL, attachmentRequest.toHookRequest(), String.class);
+        return restTemplate.postForObject(SLACK_HOOK_URL, attachmentRequest.toHookRequest(), String.class);
     }
 
     public String checkIn() {
@@ -40,7 +40,7 @@ public class SlackHook {
                 .thumb_url("https://images.mypetlife.co.kr/content/uploads/2020/05/15111507/zach-reiner-YVpr0OdSUe0-unsplash-610x407.jpg")
                 .build();
 
-        return restTemplate.postForObject(URL, attachmentRequest.toHookRequest(), String.class);
+        return restTemplate.postForObject(SLACK_HOOK_URL, attachmentRequest.toHookRequest(), String.class);
     }
 
     public String dinner() {
@@ -54,7 +54,7 @@ public class SlackHook {
                 .thumb_url("http://cdn.kormedi.com/wp-content/uploads/2020/03/gettyimages-a11229272-580x387.jpg")
                 .build();
 
-        return restTemplate.postForObject(URL, attachmentRequest.toHookRequest(), String.class);
+        return restTemplate.postForObject(SLACK_HOOK_URL, attachmentRequest.toHookRequest(), String.class);
     }
 
     public String stretch() {
@@ -68,6 +68,6 @@ public class SlackHook {
                 .thumb_url("http://img.khan.co.kr/news/2020/04/12/l_2020041201001494300115341.jpg")
                 .build();
 
-        return restTemplate.postForObject(URL, attachmentRequest.toHookRequest(), String.class);
+        return restTemplate.postForObject(SLACK_HOOK_URL, attachmentRequest.toHookRequest(), String.class);
     }
 }
