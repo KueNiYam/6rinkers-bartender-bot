@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class SlackHook {
-    private final static String URL = "https://hooks.slack.com/services/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";
+    private final static String URL = "https://hooks.slack.com/services/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";
 
     private final RestTemplate restTemplate;
 
