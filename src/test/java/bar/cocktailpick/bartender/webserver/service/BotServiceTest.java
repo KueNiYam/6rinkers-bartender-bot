@@ -1,9 +1,9 @@
-package bar.cocktailpick.bartender.web.service;
+package bar.cocktailpick.bartender.webserver.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.domain.*;
-import bar.cocktailpick.bartender.web.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.dto.BotRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

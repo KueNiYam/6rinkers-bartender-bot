@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.scheduler;
+package bar.cocktailpick.bartender.webclient;
 
 public class Crons {
 

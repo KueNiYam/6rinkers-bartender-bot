@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.scheduler;
+package bar.cocktailpick.bartender.webclient;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

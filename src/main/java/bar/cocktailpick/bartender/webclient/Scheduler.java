@@ -1,6 +1,6 @@
-package bar.cocktailpick.bartender.scheduler;
+package bar.cocktailpick.bartender.webclient;
 
-import bar.cocktailpick.bartender.api.slackhook.SlackHook;
+import bar.cocktailpick.bartender.webclient.service.AlarmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,35 +9,35 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class Scheduler {
-    private final SlackHook slackHook;
+    private final AlarmService alarmService;
 
     @Async
     @Scheduled(cron = Crons.LUNCH_TIME)
     public void lunch() {
-        slackHook.lunch();
+        alarmService.lunch();
     }
 
     @Async
     @Scheduled(cron = Crons.CHECK_IN_TUESDAY_TO_FRIDAY)
     public void checkInTuesdayToFriday() {
-        slackHook.checkIn();
+        alarmService.checkIn();
     }
 
     @Async
     @Scheduled(cron = Crons.CHECK_IN_MONDAY)
     public void checkInMonday() {
-        slackHook.checkIn();
+        alarmService.checkIn();
     }
 
     @Async
     @Scheduled(cron = Crons.DINNER_TIME)
     public void dinner() {
-        slackHook.dinner();
+        alarmService.dinner();
     }
 
     @Async
     @Scheduled(cron = Crons.STRETCH_TIME)
     public void stretch() {
-        slackHook.stretch();
+        alarmService.stretch();
     }
 }

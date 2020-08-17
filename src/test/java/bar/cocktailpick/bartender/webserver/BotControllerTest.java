@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.web;
+package bar.cocktailpick.bartender.webserver;
 
-import bar.cocktailpick.bartender.web.dto.BotResponse;
-import bar.cocktailpick.bartender.web.service.BotService;
+import bar.cocktailpick.bartender.webserver.dto.BotResponse;
+import bar.cocktailpick.bartender.webserver.service.BotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
