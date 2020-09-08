@@ -26,7 +26,7 @@ class BaseTimeEntityTest {
         Member member = memberRepository.findByName("그니")
                 .orElseThrow(RuntimeException::new);
 
-        assertThat(member.getCreatedDate()).isNotNull();
+        assertThat(member.getCreatedAt()).isNotNull();
     }
 
     @Test
@@ -34,6 +34,6 @@ class BaseTimeEntityTest {
         Member member = memberRepository.findByName("그니")
                 .orElseThrow(RuntimeException::new);
 
-        assertThat(member.getUpdatedDate()).isNotNull();
+        assertThat(member.getUpdatedAt()).isNotNull();
     }
 }
