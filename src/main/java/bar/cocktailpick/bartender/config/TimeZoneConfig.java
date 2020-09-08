@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.configuration;
+package bar.cocktailpick.bartender.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import java.util.TimeZone;
 
 @Configuration
 @Slf4j
-public class TimeZoneConfiguration {
+public class TimeZoneConfig {
 
     @PostConstruct
     public void setTimeZone() {
