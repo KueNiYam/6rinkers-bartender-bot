@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@RequiredArgsConstructor
 @Builder
+@RequiredArgsConstructor
 public class MemberResponse {
     private final Long id;
     private final String name;
@@ -26,7 +26,7 @@ public class MemberResponse {
     }
 
     public static MemberResponse of(Member member) {
-        return new MemberResponseBuilder()
+        return MemberResponse.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .slackId(member.getSlackId())
