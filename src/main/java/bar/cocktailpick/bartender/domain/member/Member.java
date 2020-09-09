@@ -1,10 +1,7 @@
 package bar.cocktailpick.bartender.domain.member;
 
 import bar.cocktailpick.bartender.domain.base.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -23,7 +20,10 @@ public class Member extends BaseTimeEntity {
     @Setter
     private String slackId;
 
-    public Member(String name) {
+    @Builder
+    public Member(Long id, String name, String slackId) {
+        this.id = id;
         this.name = name;
+        this.slackId = slackId;
     }
 }
