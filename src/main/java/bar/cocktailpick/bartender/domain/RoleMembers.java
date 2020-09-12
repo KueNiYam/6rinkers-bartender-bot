@@ -13,7 +13,7 @@ public class RoleMembers {
         this.roleMembers = roleMembers;
     }
 
-    public RoleMember find(Role role) {
+    public RoleMember find(Role2 role) {
         return roleMembers.stream()
                 .filter(roleMember -> roleMember.is(role))
                 .findFirst()

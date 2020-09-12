@@ -1,4 +1,4 @@
-package bar.cocktailpick.bartender.webserver.dto;
+package bar.cocktailpick.bartender.webserver.bot.dto;
 
 import lombok.*;
 

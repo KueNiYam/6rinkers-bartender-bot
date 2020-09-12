@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.webserver;
+package bar.cocktailpick.bartender.webserver.bot;
 
-import bar.cocktailpick.bartender.webserver.dto.BotResponse;
-import bar.cocktailpick.bartender.webserver.service.BotService;
+import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
+import bar.cocktailpick.bartender.webserver.bot.service.BotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,12 +14,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {BotController.class})
+@WebMvcTest(controllers = BotController.class)
 class BotControllerTest {
     private MockMvc mockMvc;
 
@@ -55,11 +54,4 @@ class BotControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    void hello() throws Exception {
-        mockMvc.perform(get("/api/hello")
-                .accept(MediaType.TEXT_PLAIN))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 }

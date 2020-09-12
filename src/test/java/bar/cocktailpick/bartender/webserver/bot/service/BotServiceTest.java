@@ -1,9 +1,9 @@
-package bar.cocktailpick.bartender.webserver.service;
+package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.domain.*;
-import bar.cocktailpick.bartender.webserver.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.bot.dto.BotRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,8 +52,8 @@ class BotServiceTest {
         when(shuffledRoleMembersFactory.shuffled()).thenReturn(roleMembers);
         when(roleMember.getRoleName()).thenReturn("천재");
         when(roleMember.getMemberName()).thenReturn("그니");
-        when(roleMember.is(Role.MASTER)).thenReturn(true);
-        when(roleMember.is(Role.LEADER)).thenReturn(true);
+        when(roleMember.is(Role2.MASTER)).thenReturn(true);
+        when(roleMember.is(Role2.LEADER)).thenReturn(true);
 
         assertThat(botService.serve(botRequest).getText()).contains("천재 -> 그니");
     }
@@ -82,7 +82,7 @@ class BotServiceTest {
     void serve_WhenReceiveDraw() {
         when(botRequest.isByTrigger(anyString())).thenReturn(false);
         when(botRequest.isByTrigger("뽑기")).thenReturn(true);
-        when(memberFactory.random()).thenReturn(Member.KUENI);
+        when(memberFactory.random()).thenReturn(Member2.KUENI);
 
         assertThat(botService.serve(botRequest).getText()).contains("그니");
     }

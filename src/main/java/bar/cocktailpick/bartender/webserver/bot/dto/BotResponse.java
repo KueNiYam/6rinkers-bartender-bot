@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.webserver.dto;
+package bar.cocktailpick.bartender.webserver.bot.dto;
 
-import bar.cocktailpick.bartender.domain.Member;
-import bar.cocktailpick.bartender.domain.Role;
+import bar.cocktailpick.bartender.domain.Member2;
+import bar.cocktailpick.bartender.domain.Role2;
 import bar.cocktailpick.bartender.domain.RoleMember;
 import bar.cocktailpick.bartender.domain.RoleMembers;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
@@ -32,8 +32,8 @@ public class BotResponse {
                 .map(roleMember -> roleMember.getRoleName() + " -> " + roleMember.getMemberName())
                 .collect(Collectors.joining("\n"));
 
-        RoleMember masterMember = roleMembers.find(Role.MASTER);
-        RoleMember leaderMember = roleMembers.find(Role.LEADER);
+        RoleMember masterMember = roleMembers.find(Role2.MASTER);
+        RoleMember leaderMember = roleMembers.find(Role2.LEADER);
 
         String message = String.format("%s %s은(는) 데일리 회의록을, %s %s은(는) 회의록을 작성해주세요.",
                 MarkdownUtils.bold(masterMember.getRoleName()), MarkdownUtils.code(masterMember.getMemberName()),
@@ -51,7 +51,7 @@ public class BotResponse {
         return new BotResponse(MarkdownUtils.toChannel() + "\n" + message);
     }
 
-    public static BotResponse ofDraw(Member random) {
+    public static BotResponse ofDraw(Member2 random) {
         String text = String.format("축하합니다. %s님께서 당첨되셨습니다. \uD83C\uDF89\uD83C\uDF89\uD83C\uDF89",
                 MarkdownUtils.bold(random.getMemberName()));
         return new BotResponse(text);

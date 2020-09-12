@@ -8,8 +8,8 @@ import java.util.List;
 
 @Component
 public class MemberFactory {
-    public Member random() {
-        List<Member> members = Arrays.asList(Member.values());
+    public Member2 random() {
+        List<Member2> members = Arrays.asList(Member2.values());
         Collections.shuffle(members);
 
         return members.get(0);

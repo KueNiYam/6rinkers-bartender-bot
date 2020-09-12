@@ -1,6 +1,6 @@
 package bar.cocktailpick.bartender.domain;
 
-public enum Member {
+public enum Member2 {
     TONEY("토니"),
     DOO("두강"),
     KUENI("그니"),
@@ -9,7 +9,7 @@ public enum Member {
 
     private final String name;
 
-    Member(String name) {
+    Member2(String name) {
         this.name = name;
     }
 

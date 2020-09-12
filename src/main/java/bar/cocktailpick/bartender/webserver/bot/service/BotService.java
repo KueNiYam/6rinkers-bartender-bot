@@ -1,11 +1,11 @@
-package bar.cocktailpick.bartender.webserver.service;
+package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.domain.MemberFactory;
 import bar.cocktailpick.bartender.domain.RoleMembersFactory;
-import bar.cocktailpick.bartender.webserver.dto.BotRequest;
-import bar.cocktailpick.bartender.webserver.dto.BotResponse;
+import bar.cocktailpick.bartender.webserver.bot.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

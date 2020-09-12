@@ -17,7 +17,9 @@ class BaseTimeEntityTest {
 
     @BeforeEach
     void setUp() {
-        Member member = new Member("그니");
+        Member member = Member.builder()
+                .name("그니")
+                .build();
         memberRepository.save(member);
     }
 

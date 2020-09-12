@@ -1,6 +1,6 @@
 package bar.cocktailpick.bartender.domain;
 
-public enum Role {
+public enum Role2 {
     COOK("👩‍🍳 취사병"),
     WRITER("👩‍💻 서기"),
     LEADER("👩‍🏫 회의진행자"),
@@ -9,7 +9,7 @@ public enum Role {
 
     private final String role;
 
-    Role(String role) {
+    Role2(String role) {
         this.role = role;
     }
 
