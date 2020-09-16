@@ -29,4 +29,8 @@ public class MarkdownUtils {
     public static String blockQuote(String string) {
         return "&gt;  " + string;
     }
+
+    public static String italic(String string) {
+        return "_" + string + "_";
+    }
 }
