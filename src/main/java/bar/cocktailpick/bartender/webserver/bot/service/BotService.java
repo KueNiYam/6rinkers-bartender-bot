@@ -6,6 +6,8 @@ import bar.cocktailpick.bartender.domain.MemberFactory2;
 import bar.cocktailpick.bartender.domain.RoleMembersFactory2;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
+import bar.cocktailpick.bartender.webserver.rolemembers.service.RoleMembersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class BotService {
     private final RoleMembersFactory2 roleMembersFactory;
     private final MemberFactory2 memberFactory;
     private final SlackApi slackApi;
+    private final RoleMembersService roleMembersService;
 
     public BotResponse serve(BotRequest botRequest) {
         return Command.find(botRequest)
@@ -30,8 +33,26 @@ public class BotService {
         return BotResponse.ofHelp(Command.sortedTriggers());
     }
 
-    private BotResponse role(BotRequest botRequest) {
-        return BotResponse.ofRole(roleMembersFactory.shuffled());
+    private BotResponse createRole(BotRequest botRequest) {
+        try {
+            RoleMembersResponse roleMembersResponse = roleMembersService.create();
+
+            return createBotResponseOfCreateRole(roleMembersResponse);
+        } catch (RuntimeException e) {
+            return BotResponse.ofError(e);
+        }
+    }
+
+    private BotResponse currentRole(BotRequest botRequest) {
+        return BotResponse.ofCurrentRole(roleMembersService.current());
+    }
+
+    private BotResponse createBotResponseOfCreateRole(RoleMembersResponse roleMembersResponse) {
+        if (roleMembersResponse.isEmpty()) {
+            return BotResponse.ofRoleMembersNoContent();
+        }
+
+        return BotResponse.ofCreateRole(roleMembersResponse);
     }
 
     private BotResponse review(BotRequest botRequest) {
@@ -60,7 +81,8 @@ public class BotService {
 
     public enum Command {
         HELP("도움", BotService::help),
-        ROLE("역할", BotService::role),
+        CREATE_ROLE("새로운 역할", BotService::createRole),
+        LAST_ROLE("현재 역할", BotService::currentRole),
         REVIEW("리뷰", BotService::review),
         HELLO("안녕", BotService::hello),
         DRAW("뽑기", BotService::draw);

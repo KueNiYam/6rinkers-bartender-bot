@@ -15,8 +15,6 @@ public class RoleMember {
     @SequenceGenerator(name = "role_member_sequence_gen", sequenceName = "role_member_sequence")
     private Long id;
 
-    private String roleEmoji;
-
     private String role;
 
     private String member;
@@ -24,8 +22,7 @@ public class RoleMember {
     @ManyToOne
     private RoleMembers roleMembers;
 
-    public RoleMember(String roleEmoji, String role, String member) {
-        this.roleEmoji = roleEmoji;
+    public RoleMember(String role, String member) {
         this.role = role;
         this.member = member;
     }

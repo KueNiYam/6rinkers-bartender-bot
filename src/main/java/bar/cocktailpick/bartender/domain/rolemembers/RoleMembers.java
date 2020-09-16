@@ -1,7 +1,6 @@
 package bar.cocktailpick.bartender.domain.rolemembers;
 
 import bar.cocktailpick.bartender.domain.base.BaseTimeEntity;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class RoleMembers extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_members_sequence_gen")

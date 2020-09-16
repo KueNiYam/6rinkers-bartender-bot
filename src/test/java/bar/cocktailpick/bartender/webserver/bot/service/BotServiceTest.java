@@ -2,8 +2,16 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
-import bar.cocktailpick.bartender.domain.*;
+import bar.cocktailpick.bartender.domain.Member2;
+import bar.cocktailpick.bartender.domain.MemberFactory2;
+import bar.cocktailpick.bartender.domain.RoleMember2;
+import bar.cocktailpick.bartender.domain.RoleMembersFactory2;
+import bar.cocktailpick.bartender.domain.rolemembers.RoleMembers;
+import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMemberResponse;
+import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
+import bar.cocktailpick.bartender.webserver.rolemembers.service.RoleMembersService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +38,9 @@ class BotServiceTest {
     private SlackApi slackApi;
 
     @Mock
+    private RoleMembersService roleMembersService;
+
+    @Mock
     private BotRequest botRequest;
 
     @Mock
@@ -40,22 +51,53 @@ class BotServiceTest {
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(shuffledRoleMembersFactory, memberFactory, slackApi);
+        botService = new BotService(shuffledRoleMembersFactory, memberFactory, slackApi, roleMembersService);
     }
 
     @Test
-    void serve_WhenReceiveRole() {
-        RoleMembers2 roleMembers = new RoleMembers2(Collections.singletonList(roleMember));
-
+    void serve_WhenReceiveCreateRole() {
         when(botRequest.isByTrigger(anyString())).thenReturn(false);
-        when(botRequest.isByTrigger("역할")).thenReturn(true);
-        when(shuffledRoleMembersFactory.shuffled()).thenReturn(roleMembers);
-        when(roleMember.getRoleName()).thenReturn("천재");
-        when(roleMember.getMemberName()).thenReturn("그니");
-        when(roleMember.is(Role2.MASTER)).thenReturn(true);
-        when(roleMember.is(Role2.LEADER)).thenReturn(true);
+        when(botRequest.isByTrigger("새로운 역할")).thenReturn(true);
 
-        assertThat(botService.serve(botRequest).getText()).contains("천재 -> 그니");
+        when(roleMembersService.create()).thenReturn(new RoleMembersResponse(
+                Collections.singletonList(new RoleMemberResponse("취사병", "그니"))
+                , null));
+
+        assertThat(botService.serve(botRequest).getText()).contains("취사병", "그니");
+    }
+
+    @Test
+    void serve_WhenReceiveCreateRoleAndNoRoles() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger("새로운 역할")).thenReturn(true);
+
+        when(roleMembersService.create()).thenReturn(new RoleMembersResponse(
+                Collections.emptyList(), null));
+
+        assertThat(botService.serve(botRequest).getText())
+                .isEqualTo(BotResponse.ofRoleMembersNoContent().getText());
+    }
+
+    @Test
+    void serve_WhenReceiveCreateRoleAndRoleMembersServiceThrowException() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger("새로운 역할")).thenReturn(true);
+
+        when(roleMembersService.create()).thenThrow(RuntimeException.class);
+
+        assertThat(botService.serve(botRequest).getText())
+                .isEqualTo(BotResponse.ofError(new RuntimeException()).getText());
+    }
+
+    @Test
+    void serve_WhenReceiveCurrentRole() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger("현재 역할")).thenReturn(true);
+
+        RoleMembers roleMembers = new RoleMembers();
+        when(roleMembersService.current()).thenReturn(RoleMembersResponse.of(roleMembers));
+
+        assertThat(botService.serve(botRequest).getText()).isNotNull();
     }
 
     @Test

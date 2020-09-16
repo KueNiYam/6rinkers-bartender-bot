@@ -1,6 +1,7 @@
 package bar.cocktailpick.bartender.webserver.adminbot.dto;
 
 import bar.cocktailpick.bartender.domain.member.Member;
+import bar.cocktailpick.bartender.util.MarkdownUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +29,11 @@ public class MemberResponse {
         );
     }
 
-    public String toText() {
-        return "아이디: " + id + " / " +
+    public String toCode() {
+        return MarkdownUtils.code("아이디: " + id + " / " +
                 "이름: " + name + " / " +
                 "슬랙 아이디: " + slackId + " / " +
                 "생성 날짜: " + createdAt + " / " +
-                "수정 날짜: " + updatedAt;
+                "수정 날짜: " + updatedAt);
     }
 }

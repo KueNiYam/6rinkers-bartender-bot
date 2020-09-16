@@ -33,7 +33,7 @@ public class AdminBotResponse {
 
         List<String> memberResponses = allMembers.stream()
                 .map(MemberResponse::of)
-                .map(MemberResponse::toText)
+                .map(MemberResponse::toCode)
                 .collect(Collectors.toList());
 
         String content = String.join(System.lineSeparator(), memberResponses);
@@ -52,7 +52,7 @@ public class AdminBotResponse {
 
     public static AdminBotResponse ofAddMember(Member saved) {
         return new AdminBotResponse("성공적으로 저장했습니다." + System.lineSeparator() +
-                MarkdownUtils.code(MemberResponse.of(saved).toText()));
+                MemberResponse.of(saved).toCode());
     }
 
     public static AdminBotResponse ofAllRoles(List<Role> roles) {
@@ -60,7 +60,7 @@ public class AdminBotResponse {
 
         List<String> roleResponses = roles.stream()
                 .map(RoleResponse::of)
-                .map(RoleResponse::toText)
+                .map(RoleResponse::toCode)
                 .collect(Collectors.toList());
 
         String content = String.join(System.lineSeparator(), roleResponses);
@@ -80,6 +80,6 @@ public class AdminBotResponse {
 
     public static AdminBotResponse ofAddRole(Role saved) {
         return new AdminBotResponse("성공적으로 저장했습니다." + System.lineSeparator() +
-                MarkdownUtils.code(RoleResponse.of(saved).toText()));
+                RoleResponse.of(saved).toCode());
     }
 }

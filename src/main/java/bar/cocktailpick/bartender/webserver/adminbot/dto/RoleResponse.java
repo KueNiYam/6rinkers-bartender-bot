@@ -1,6 +1,7 @@
 package bar.cocktailpick.bartender.webserver.adminbot.dto;
 
 import bar.cocktailpick.bartender.domain.role.Role;
+import bar.cocktailpick.bartender.util.MarkdownUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,10 @@ public class RoleResponse {
         return new RoleResponse(role.getId(), role.getRole(), role.getCreatedAt(), role.getUpdatedAt());
     }
 
-    public String toText() {
-        return "아이디: " + id + " / " +
+    public String toCode() {
+        return MarkdownUtils.code("아이디: " + id + " / " +
                 "역할: " + role + " / " +
                 "생성 날짜: " + createdAt + " / " +
-                "수정 날짜: " + updatedAt;
+                "수정 날짜: " + updatedAt);
     }
 }

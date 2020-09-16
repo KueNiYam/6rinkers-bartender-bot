@@ -22,8 +22,8 @@ class RoleMembersRepositoryTest {
 
         roleMembersRepository.save(roleMembers);
 
-        RoleMember roleMember1 = new RoleMember("😀", "그니", "취사병");
-        RoleMember roleMember2 = new RoleMember("😂", "토니", "회의진행자");
+        RoleMember roleMember1 = new RoleMember("그니", "취사병");
+        RoleMember roleMember2 = new RoleMember("토니", "회의진행자");
 
         roleMemberRepository.save(roleMember1);
         roleMemberRepository.save(roleMember2);
@@ -49,8 +49,8 @@ class RoleMembersRepositoryTest {
 
         roleMembersRepository.save(roleMembers);
 
-        RoleMember roleMember1 = new RoleMember("😀", "그니", "취사병");
-        RoleMember roleMember2 = new RoleMember("😂", "토니", "회의진행자");
+        RoleMember roleMember1 = new RoleMember("그니", "취사병");
+        RoleMember roleMember2 = new RoleMember("토니", "회의진행자");
 
         roleMemberRepository.save(roleMember1);
         roleMemberRepository.save(roleMember2);
@@ -68,5 +68,18 @@ class RoleMembersRepositoryTest {
                 () -> assertThat(roleMember2.getId()).isNotNull(),
                 () -> assertThat(roleMember2.getRoleMembers()).isNotNull()
         );
+    }
+
+    @Test
+    void findFirstByOrderByCreatedAtDesc() {
+        RoleMembers roleMembers = new RoleMembers();
+        RoleMembers roleMembers2 = new RoleMembers();
+        RoleMembers roleMembers3 = new RoleMembers();
+
+        roleMembersRepository.saveAndFlush(roleMembers);
+        roleMembersRepository.saveAndFlush(roleMembers2);
+        roleMembersRepository.saveAndFlush(roleMembers3);
+
+        assertThat(roleMembersRepository.findFirstByOrderByCreatedAtDesc()).isEqualTo(roleMembers3);
     }
 }
