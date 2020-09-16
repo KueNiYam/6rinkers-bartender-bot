@@ -2,10 +2,9 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
-import bar.cocktailpick.bartender.domain.MemberFactory2;
-import bar.cocktailpick.bartender.domain.RoleMembersFactory2;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.member.service.MemberService;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.service.RoleMembersService;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +18,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class BotService {
-    private final RoleMembersFactory2 roleMembersFactory;
-    private final MemberFactory2 memberFactory;
     private final SlackApi slackApi;
     private final RoleMembersService roleMembersService;
+    private final MemberService memberService;
 
     public BotResponse serve(BotRequest botRequest) {
         return Command.find(botRequest)
@@ -65,8 +63,20 @@ public class BotService {
         return BotResponse.displayNameNotFound();
     }
 
-    private BotResponse draw(BotRequest botRequest) {
-        return BotResponse.ofDraw(memberFactory.random());
+    private BotResponse drawOne(BotRequest botRequest) {
+        try {
+            return BotResponse.ofDrawOne(memberService.drawOne());
+        } catch (RuntimeException e) {
+            return BotResponse.ofError(e);
+        }
+    }
+
+    private BotResponse drawTwo(BotRequest botRequest) {
+        try {
+            return BotResponse.ofDrawTwo(memberService.drawTwo());
+        } catch (RuntimeException e) {
+            return BotResponse.ofError(e);
+        }
     }
 
     private BotResponse hello(BotRequest botRequest) {
@@ -85,7 +95,8 @@ public class BotService {
         LAST_ROLE("현재 역할", BotService::currentRole),
         REVIEW("리뷰", BotService::review),
         HELLO("안녕", BotService::hello),
-        DRAW("뽑기", BotService::draw);
+        DRAW_ONE("뽑기 하나", BotService::drawOne),
+        DRAW_TWO("뽑기 둘", BotService::drawTwo);
 
         private final String trigger;
         private final BiFunction<BotService, BotRequest, BotResponse> behavior;
@@ -107,6 +118,10 @@ public class BotService {
                     .filter(command -> botRequest.isByTrigger(command.trigger))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("처리할 수 있는 요청이 아닙니다."));
+        }
+
+        public String getTrigger() {
+            return trigger;
         }
     }
 }

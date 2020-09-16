@@ -80,6 +80,6 @@ class RoleMembersRepositoryTest {
         roleMembersRepository.saveAndFlush(roleMembers2);
         roleMembersRepository.saveAndFlush(roleMembers3);
 
-        assertThat(roleMembersRepository.findFirstByOrderByCreatedAtDesc()).isEqualTo(roleMembers3);
+        assertThat(roleMembersRepository.findFirstByOrderByCreatedAtDesc().get()).isEqualTo(roleMembers3);
     }
 }

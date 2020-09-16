@@ -2,13 +2,12 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
-import bar.cocktailpick.bartender.domain.Member2;
 import bar.cocktailpick.bartender.domain.MemberFactory2;
-import bar.cocktailpick.bartender.domain.RoleMember2;
-import bar.cocktailpick.bartender.domain.RoleMembersFactory2;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMembers;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.member.dto.SimpleMemberResponse;
+import bar.cocktailpick.bartender.webserver.member.service.MemberService;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMemberResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.service.RoleMembersService;
@@ -18,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,9 +29,6 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private RoleMembersFactory2 shuffledRoleMembersFactory;
-
-    @Mock
     private MemberFactory2 memberFactory;
 
     @Mock
@@ -41,17 +38,17 @@ class BotServiceTest {
     private RoleMembersService roleMembersService;
 
     @Mock
-    private BotRequest botRequest;
+    private MemberService memberService;
 
     @Mock
-    private RoleMember2 roleMember;
+    private BotRequest botRequest;
 
     @Mock
     private UserProfileResponse userProfileResponse;
 
     @BeforeEach
     void setUp() {
-        botService = new BotService(shuffledRoleMembersFactory, memberFactory, slackApi, roleMembersService);
+        botService = new BotService(slackApi, roleMembersService, memberService);
     }
 
     @Test
@@ -121,12 +118,26 @@ class BotServiceTest {
     }
 
     @Test
-    void serve_WhenReceiveDraw() {
+    void serve_WhenReceiveDrawOne() {
         when(botRequest.isByTrigger(anyString())).thenReturn(false);
-        when(botRequest.isByTrigger("뽑기")).thenReturn(true);
-        when(memberFactory.random()).thenReturn(Member2.KUENI);
+        when(botRequest.isByTrigger(BotService.Command.DRAW_ONE.getTrigger())).thenReturn(true);
+
+        when(memberService.drawOne()).thenReturn(new SimpleMemberResponse("그니"));
 
         assertThat(botService.serve(botRequest).getText()).contains("그니");
+    }
+
+    @Test
+    void serve_WhenReceiveDrawTwo() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.DRAW_TWO.getTrigger())).thenReturn(true);
+
+        when(memberService.drawTwo()).thenReturn(Arrays.asList(
+                new SimpleMemberResponse("그니"),
+                new SimpleMemberResponse("토니"))
+        );
+
+        assertThat(botService.serve(botRequest).getText()).contains("그니", "토니");
     }
 
     @Test

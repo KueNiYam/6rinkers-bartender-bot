@@ -1,10 +1,10 @@
 package bar.cocktailpick.bartender.webserver.bot.dto;
 
-import bar.cocktailpick.bartender.domain.Member2;
 import bar.cocktailpick.bartender.domain.Role2;
 import bar.cocktailpick.bartender.domain.RoleMember2;
 import bar.cocktailpick.bartender.domain.RoleMembers2;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
+import bar.cocktailpick.bartender.webserver.member.dto.SimpleMemberResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
 import lombok.*;
 
@@ -68,9 +68,20 @@ public class BotResponse {
         return new BotResponse(MarkdownUtils.toChannel() + "\n" + message);
     }
 
-    public static BotResponse ofDraw(Member2 random) {
+    public static BotResponse ofDrawOne(SimpleMemberResponse member) {
         String text = String.format("축하합니다. %s님께서 당첨되셨습니다. \uD83C\uDF89\uD83C\uDF89\uD83C\uDF89",
-                MarkdownUtils.bold(random.getMemberName()));
+                MarkdownUtils.bold(member.getName()));
+
+        return new BotResponse(text);
+    }
+
+    public static BotResponse ofDrawTwo(List<SimpleMemberResponse> members) {
+        String boldNames = members.stream()
+                .map(member -> MarkdownUtils.bold(member.getName()))
+                .collect(Collectors.joining(", "));
+
+        String text = "축하합니다. " + boldNames + "님들께서 당첨되셨습니다. \uD83C\uDF89\uD83C\uDF89\uD83C\uDF89";
+
         return new BotResponse(text);
     }
 
