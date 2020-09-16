@@ -80,4 +80,10 @@ public class BotResponse {
         return new BotResponse("예외가 발생했습니다." + System.lineSeparator() +
                 MarkdownUtils.code(exception.getMessage()));
     }
+
+    public static BotResponse ofPatchNote() {
+        return new BotResponse(MarkdownUtils.bold("패치 노트") +
+                System.lineSeparator() +
+                "https://github.com/KueNiYam/6rinkers-bartender-bot");
+    }
 }

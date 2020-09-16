@@ -89,6 +89,10 @@ public class BotService {
         return BotResponse.displayNameNotFound();
     }
 
+    private BotResponse patchNote(BotRequest botRequest) {
+        return BotResponse.ofPatchNote();
+    }
+
     public enum Command {
         HELP("도움", BotService::help),
         CREATE_ROLE("새로운 역할", BotService::createRole),
@@ -96,7 +100,8 @@ public class BotService {
         REVIEW("리뷰", BotService::review),
         HELLO("안녕", BotService::hello),
         DRAW_ONE("뽑기 하나", BotService::drawOne),
-        DRAW_TWO("뽑기 둘", BotService::drawTwo);
+        DRAW_TWO("뽑기 둘", BotService::drawTwo),
+        PATCH_NOTE("패치 노트", BotService::patchNote);
 
         private final String trigger;
         private final BiFunction<BotService, BotRequest, BotResponse> behavior;

@@ -147,4 +147,12 @@ class BotServiceTest {
 
         assertThat(botService.serve(botRequest).getText()).contains("안녕하세요", "명령", "도움", "그니");
     }
+
+    @Test
+    void serve_WhenReceivePatchNote() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.PATCH_NOTE.getTrigger())).thenReturn(true);
+
+        assertThat(botService.serve(botRequest)).isEqualTo(BotResponse.ofPatchNote());
+    }
 }
