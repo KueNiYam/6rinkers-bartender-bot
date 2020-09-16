@@ -1,8 +1,5 @@
 package bar.cocktailpick.bartender.webserver.bot.dto;
 
-import bar.cocktailpick.bartender.domain.Role2;
-import bar.cocktailpick.bartender.domain.RoleMember2;
-import bar.cocktailpick.bartender.domain.RoleMembers2;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
 import bar.cocktailpick.bartender.webserver.member.dto.SimpleMemberResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
@@ -42,23 +39,6 @@ public class BotResponse {
 
     public static BotResponse ofCurrentRole(RoleMembersResponse currentRole) {
         return new BotResponse(currentRole.toText());
-    }
-
-    public static BotResponse ofRole(RoleMembers2 roleMembers) {
-        String roles = roleMembers.stream()
-                .map(roleMember -> roleMember.getRoleName() + " -> " + roleMember.getMemberName())
-                .collect(Collectors.joining("\n"));
-
-        RoleMember2 masterMember = roleMembers.find(Role2.MASTER);
-        RoleMember2 leaderMember = roleMembers.find(Role2.LEADER);
-
-        String message = String.format("%s %s은(는) 데일리 회의록을, %s %s은(는) 회의록을 작성해주세요.",
-                MarkdownUtils.bold(masterMember.getRoleName()), MarkdownUtils.code(masterMember.getMemberName()),
-                MarkdownUtils.bold(leaderMember.getRoleName()), MarkdownUtils.code(leaderMember.getMemberName()));
-
-        String text = String.format("%s\n\n%s", roles, MarkdownUtils.blockQuote(message));
-
-        return new BotResponse(text);
     }
 
     public static BotResponse ofReview(String userName) {

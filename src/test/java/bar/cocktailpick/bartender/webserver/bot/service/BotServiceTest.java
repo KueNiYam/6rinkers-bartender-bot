@@ -2,7 +2,6 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
-import bar.cocktailpick.bartender.domain.MemberFactory2;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMembers;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
@@ -27,9 +26,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BotServiceTest {
     private BotService botService;
-
-    @Mock
-    private MemberFactory2 memberFactory;
 
     @Mock
     private SlackApi slackApi;
