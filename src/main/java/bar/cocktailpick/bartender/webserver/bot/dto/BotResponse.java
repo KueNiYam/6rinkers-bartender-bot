@@ -82,7 +82,7 @@ public class BotResponse {
     }
 
     public static BotResponse ofPatchNote() {
-        return new BotResponse(MarkdownUtils.bold("패치 노트") +
+        return new BotResponse(MarkdownUtils.bold("패치 노트") + "는 여기서 확인하실 수 있습니다." +
                 System.lineSeparator() +
                 "https://github.com/KueNiYam/6rinkers-bartender-bot");
     }

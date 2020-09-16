@@ -42,7 +42,7 @@ public class AdminBotService {
     protected AdminBotResponse addMember(BotRequest botRequest) {
         String receive = botRequest.getText();
 
-        List<String> split = Arrays.asList(receive.split(CommandUtils.separator));
+        List<String> split = Arrays.asList(receive.split(CommandUtils.INPUT_SEPARATOR));
 
         if (split.size() != 2) {
             return AdminBotResponse.ofAddMemberHelp();
@@ -74,7 +74,7 @@ public class AdminBotService {
     protected AdminBotResponse addRole(BotRequest botRequest) {
         String receive = botRequest.getText();
 
-        List<String> split = Arrays.asList(receive.split(CommandUtils.separator));
+        List<String> split = Arrays.asList(receive.split(CommandUtils.INPUT_SEPARATOR));
 
         if (split.size() != 2) {
             return AdminBotResponse.ofAddRoleHelp();
@@ -100,9 +100,9 @@ public class AdminBotService {
     public enum Command {
         HELP("도움", AdminBotService::help),
         ALL_MEMBERS("팀원 목록", AdminBotService::allMembers),
-        ADD_MEMBER("팀원 추가" + CommandUtils.separator, AdminBotService::addMember),
+        ADD_MEMBER("팀원 추가" + CommandUtils.INPUT_SEPARATOR, AdminBotService::addMember),
         ALL_ROLES("역할 목록", AdminBotService::allRoles),
-        ADD_ROLE("역할 추가" + CommandUtils.separator, AdminBotService::addRole);
+        ADD_ROLE("역할 추가" + CommandUtils.INPUT_SEPARATOR, AdminBotService::addRole);
 
         private final String trigger;
         private final BiFunction<AdminBotService, BotRequest, AdminBotResponse> behavior;
