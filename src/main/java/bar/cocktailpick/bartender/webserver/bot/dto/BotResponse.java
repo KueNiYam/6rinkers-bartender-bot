@@ -2,8 +2,8 @@ package bar.cocktailpick.bartender.webserver.bot.dto;
 
 import bar.cocktailpick.bartender.domain.Member2;
 import bar.cocktailpick.bartender.domain.Role2;
-import bar.cocktailpick.bartender.domain.RoleMember;
-import bar.cocktailpick.bartender.domain.RoleMembers;
+import bar.cocktailpick.bartender.domain.RoleMember2;
+import bar.cocktailpick.bartender.domain.RoleMembers2;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
 import lombok.*;
 
@@ -27,13 +27,13 @@ public class BotResponse {
         return new BotResponse(message + MarkdownUtils.blockQuote(list));
     }
 
-    public static BotResponse ofRole(RoleMembers roleMembers) {
+    public static BotResponse ofRole(RoleMembers2 roleMembers) {
         String roles = roleMembers.stream()
                 .map(roleMember -> roleMember.getRoleName() + " -> " + roleMember.getMemberName())
                 .collect(Collectors.joining("\n"));
 
-        RoleMember masterMember = roleMembers.find(Role2.MASTER);
-        RoleMember leaderMember = roleMembers.find(Role2.LEADER);
+        RoleMember2 masterMember = roleMembers.find(Role2.MASTER);
+        RoleMember2 leaderMember = roleMembers.find(Role2.LEADER);
 
         String message = String.format("%s %s은(는) 데일리 회의록을, %s %s은(는) 회의록을 작성해주세요.",
                 MarkdownUtils.bold(masterMember.getRoleName()), MarkdownUtils.code(masterMember.getMemberName()),

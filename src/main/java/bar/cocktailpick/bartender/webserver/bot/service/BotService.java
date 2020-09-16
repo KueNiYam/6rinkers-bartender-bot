@@ -2,10 +2,10 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
-import bar.cocktailpick.bartender.domain.MemberFactory;
-import bar.cocktailpick.bartender.domain.RoleMembersFactory;
-import bar.cocktailpick.bartender.webserver.bot.dto.BotRequest;
+import bar.cocktailpick.bartender.domain.MemberFactory2;
+import bar.cocktailpick.bartender.domain.RoleMembersFactory2;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
+import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class BotService {
-    private final RoleMembersFactory roleMembersFactory;
-    private final MemberFactory memberFactory;
+    private final RoleMembersFactory2 roleMembersFactory;
+    private final MemberFactory2 memberFactory;
     private final SlackApi slackApi;
 
     public BotResponse serve(BotRequest botRequest) {

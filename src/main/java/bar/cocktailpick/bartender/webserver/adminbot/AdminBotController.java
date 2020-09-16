@@ -1,7 +1,7 @@
-package bar.cocktailpick.bartender.webserver.bot;
+package bar.cocktailpick.bartender.webserver.adminbot;
 
-import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
-import bar.cocktailpick.bartender.webserver.bot.service.BotService;
+import bar.cocktailpick.bartender.webserver.adminbot.dto.AdminBotResponse;
+import bar.cocktailpick.bartender.webserver.adminbot.service.AdminBotService;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/bot")
-public class BotController {
-    private final BotService botService;
+@RequestMapping("/api/admin-bot")
+public class AdminBotController {
+    private final AdminBotService adminBotService;
 
     @PostMapping
-    public ResponseEntity<BotResponse> service(BotRequest botRequest) {
+    public ResponseEntity<AdminBotResponse> service(BotRequest botRequest) {
         if (botRequest.isByBot()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(botService.serve(botRequest));
+        return ResponseEntity.ok(adminBotService.serve(botRequest));
     }
 }

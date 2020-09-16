@@ -20,12 +20,9 @@ public class Role extends BaseTimeEntity {
     @Column(unique = true)
     private String role;
 
-    private String emoji;
-
     @Builder
-    public Role(Long id, String role, String emoji) {
+    public Role(Long id, String role) {
         this.id = id;
         this.role = role;
-        this.emoji = emoji;
     }
 }

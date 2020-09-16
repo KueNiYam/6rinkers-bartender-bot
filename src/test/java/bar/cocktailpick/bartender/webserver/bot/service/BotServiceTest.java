@@ -3,7 +3,7 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.domain.*;
-import bar.cocktailpick.bartender.webserver.bot.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,10 +21,10 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private RoleMembersFactory shuffledRoleMembersFactory;
+    private RoleMembersFactory2 shuffledRoleMembersFactory;
 
     @Mock
-    private MemberFactory memberFactory;
+    private MemberFactory2 memberFactory;
 
     @Mock
     private SlackApi slackApi;
@@ -33,7 +33,7 @@ class BotServiceTest {
     private BotRequest botRequest;
 
     @Mock
-    private RoleMember roleMember;
+    private RoleMember2 roleMember;
 
     @Mock
     private UserProfileResponse userProfileResponse;
@@ -45,7 +45,7 @@ class BotServiceTest {
 
     @Test
     void serve_WhenReceiveRole() {
-        RoleMembers roleMembers = new RoleMembers(Collections.singletonList(roleMember));
+        RoleMembers2 roleMembers = new RoleMembers2(Collections.singletonList(roleMember));
 
         when(botRequest.isByTrigger(anyString())).thenReturn(false);
         when(botRequest.isByTrigger("역할")).thenReturn(true);

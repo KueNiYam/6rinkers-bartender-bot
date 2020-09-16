@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class MemberFactory {
+public class MemberFactory2 {
     public Member2 random() {
         List<Member2> members = Arrays.asList(Member2.values());
         Collections.shuffle(members);
