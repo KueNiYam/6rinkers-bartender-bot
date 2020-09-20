@@ -19,7 +19,6 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>*%-4relative [%thread] %-5level %class* - %msg%n</pattern>
         </layout>
-        <iconEmoji>:stuck_out_tongue_winking_eye:</iconEmoji>
         <colorCoding>true</colorCoding>
     </appender>
 
