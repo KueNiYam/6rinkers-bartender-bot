@@ -4,6 +4,7 @@ import bar.cocktailpick.bartender.domain.member.Member;
 import bar.cocktailpick.bartender.domain.member.MemberRepository;
 import bar.cocktailpick.bartender.domain.role.Role;
 import bar.cocktailpick.bartender.domain.role.RoleRepository;
+import bar.cocktailpick.bartender.domain.rolemembers.RoleMember;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMemberRepository;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMembers;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMembersRepository;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,6 +60,12 @@ class RoleMembersServiceTest {
                 new Role(3L, "서기")
         ));
 
+        when(roleMemberRepository.saveAll(any())).thenReturn(Arrays.asList(
+                new RoleMember(1L, "취사병", "두강"),
+                new RoleMember(2L, "회의 진행자", "그니"),
+                new RoleMember(3L, "서기", "토니")
+        ));
+
         RoleMembersResponse result = roleMembersService.create();
 
         assertAll(
@@ -79,6 +87,12 @@ class RoleMembersServiceTest {
                 new Role(1L, "취사병"),
                 new Role(2L, "회의 진행자"),
                 new Role(3L, "서기")
+        ));
+
+        when(roleMemberRepository.saveAll(any())).thenReturn(Arrays.asList(
+                new RoleMember(1L, "취사병", "작곰"),
+                new RoleMember(2L, "회의 진행자", "토니"),
+                new RoleMember(3L, "서기", "두강")
         ));
 
         RoleMembersResponse result = roleMembersService.create();
