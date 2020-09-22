@@ -17,7 +17,6 @@ public class Role extends BaseTimeEntity {
     @SequenceGenerator(name = "role_sequence_gen", sequenceName = "role_sequence")
     private Long id;
 
-    @Column(unique = true)
     private String role;
 
     @Builder

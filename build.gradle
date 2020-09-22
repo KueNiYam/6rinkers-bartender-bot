@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'com.ewerk.gradle.plugins.querydsl' version "1.0.10"
 }
 
 group = 'bar.cocktailpick'
@@ -38,8 +39,35 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     implementation "com.github.maricn:logback-slack-appender:${logbackSlackAppenderVersion}"
+
+    implementation "com.querydsl:querydsl-apt"
+    implementation "com.querydsl:querydsl-jpa"
 }
 
 test {
     useJUnitPlatform()
+}
+
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
 }

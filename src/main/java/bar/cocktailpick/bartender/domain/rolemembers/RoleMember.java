@@ -22,9 +22,14 @@ public class RoleMember {
     @ManyToOne
     private RoleMembers roleMembers;
 
-    public RoleMember(String role, String member) {
+    public RoleMember(Long id, String role, String member) {
+        this.id = id;
         this.role = role;
         this.member = member;
+    }
+
+    public RoleMember(String role, String member) {
+        this(null, role, member);
     }
 
     public void initRoleMembers(RoleMembers roleMembers) {
