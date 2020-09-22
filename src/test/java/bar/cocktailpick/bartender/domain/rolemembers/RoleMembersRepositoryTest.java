@@ -80,6 +80,9 @@ class RoleMembersRepositoryTest {
         roleMembersRepository.saveAndFlush(roleMembers2);
         roleMembersRepository.saveAndFlush(roleMembers3);
 
+        RoleMember roleMember = roleMemberRepository.saveAndFlush(new RoleMember("러브", "그니"));
+        roleMembers3.add(roleMember);
+
         assertThat(roleMembersRepository.findFirstByOrderByCreatedAtDesc().get()).isEqualTo(roleMembers3);
     }
 }

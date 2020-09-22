@@ -11,6 +11,7 @@ import bar.cocktailpick.bartender.domain.rolemembers.RoleMembersRepository;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,7 @@ public class RoleMembersService {
     private final RoleMemberRepository roleMemberRepository;
     private final RoleMembersRepository roleMembersRepository;
 
+    @Transactional
     public RoleMembersResponse create() {
         List<Member> members = memberRepository.findAll();
         List<Role> roles = roleRepository.findAll();
@@ -34,11 +36,11 @@ public class RoleMembersService {
         }
 
         Collections.shuffle(members);
-        List<Member> shuffledAndCut = members.stream()
+        List<Member> toAssign = members.stream()
                 .limit(roles.size())
                 .collect(Collectors.toList());
 
-        List<RoleMember> assigned = assignEach(roles, shuffledAndCut);
+        List<RoleMember> assigned = assignEach(roles, toAssign);
 
         RoleMembers roleMembers = toRoleMembers(assigned);
 
@@ -62,10 +64,10 @@ public class RoleMembersService {
             assigned.add(new RoleMember(roles.get(i).getRole(), shuffledAndCut.get(i).getName()));
         }
 
-        roleMemberRepository.saveAll(assigned);
-        return assigned;
+        return roleMemberRepository.saveAll(assigned);
     }
 
+    @Transactional(readOnly = true)
     public RoleMembersResponse current() {
         RoleMembers roleMembers = roleMembersRepository.findFirstByOrderByCreatedAtDesc()
                 .orElseThrow(() -> new RuntimeException("현재 역할을 불러올 수 없습니다."));
