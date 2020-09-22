@@ -14,7 +14,6 @@ public class Member extends BaseTimeEntity {
     @SequenceGenerator(name = "member_sequence_gen", sequenceName = "member_sequence")
     private Long id;
 
-    @Column(unique = true)
     private String name;
 
     @Setter
