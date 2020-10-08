@@ -1,5 +1,7 @@
 package bar.cocktailpick.bartender.webserver.bot.dto;
 
+import bar.cocktailpick.bartender.domain.dice.Dice;
+import bar.cocktailpick.bartender.domain.dice.DiceEmojiTable;
 import bar.cocktailpick.bartender.util.MarkdownUtils;
 import bar.cocktailpick.bartender.webserver.member.dto.SimpleMemberResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
@@ -85,5 +87,13 @@ public class BotResponse {
         return new BotResponse(MarkdownUtils.bold("패치 노트") + "는 여기서 확인하실 수 있습니다." +
                 System.lineSeparator() +
                 "https://github.com/KueNiYam/6rinkers-bartender-bot");
+    }
+
+    public static BotResponse ofDice(Dice dice) {
+        return new BotResponse(
+                dice.getNumber()
+                        + "점이에요"
+                        + DiceEmojiTable.findEmoji(dice)
+        );
     }
 }

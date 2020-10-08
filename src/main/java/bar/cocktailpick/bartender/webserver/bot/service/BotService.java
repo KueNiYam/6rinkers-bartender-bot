@@ -4,6 +4,7 @@ import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.dice.service.DiceGenerator;
 import bar.cocktailpick.bartender.webserver.member.service.MemberService;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMembersResponse;
 import bar.cocktailpick.bartender.webserver.rolemembers.service.RoleMembersService;
@@ -21,6 +22,7 @@ public class BotService {
     private final SlackApi slackApi;
     private final RoleMembersService roleMembersService;
     private final MemberService memberService;
+    private final DiceGenerator diceGenerator;
 
     public BotResponse serve(BotRequest botRequest) {
         return Command.find(botRequest)
@@ -93,6 +95,10 @@ public class BotService {
         return BotResponse.ofPatchNote();
     }
 
+    private BotResponse dice(BotRequest botRequest) {
+        return BotResponse.ofDice(diceGenerator.generate());
+    }
+
     public enum Command {
         HELP("도움", BotService::help),
         CREATE_ROLE("새로운 역할", BotService::createRole),
@@ -101,7 +107,8 @@ public class BotService {
         HELLO("안녕", BotService::hello),
         DRAW_ONE("뽑기 하나", BotService::drawOne),
         DRAW_TWO("뽑기 둘", BotService::drawTwo),
-        PATCH_NOTE("패치 노트", BotService::patchNote);
+        PATCH_NOTE("패치 노트", BotService::patchNote),
+        DICE("주사위", BotService::dice);
 
         private final String trigger;
         private final BiFunction<BotService, BotRequest, BotResponse> behavior;

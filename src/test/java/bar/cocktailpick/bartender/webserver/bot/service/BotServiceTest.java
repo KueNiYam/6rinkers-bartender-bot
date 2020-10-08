@@ -2,9 +2,12 @@ package bar.cocktailpick.bartender.webserver.bot.service;
 
 import bar.cocktailpick.bartender.api.slackapi.SlackApi;
 import bar.cocktailpick.bartender.api.slackapi.dto.UserProfileResponse;
+import bar.cocktailpick.bartender.domain.dice.Dice;
+import bar.cocktailpick.bartender.domain.dice.DiceEmojiTable;
 import bar.cocktailpick.bartender.domain.rolemembers.RoleMembers;
 import bar.cocktailpick.bartender.webserver.bot.dto.BotResponse;
 import bar.cocktailpick.bartender.webserver.common.dto.BotRequest;
+import bar.cocktailpick.bartender.webserver.dice.service.DiceGenerator;
 import bar.cocktailpick.bartender.webserver.member.dto.SimpleMemberResponse;
 import bar.cocktailpick.bartender.webserver.member.service.MemberService;
 import bar.cocktailpick.bartender.webserver.rolemembers.dto.RoleMemberResponse;
@@ -42,9 +45,12 @@ class BotServiceTest {
     @Mock
     private UserProfileResponse userProfileResponse;
 
+    @Mock
+    private DiceGenerator diceGenerator;
+
     @BeforeEach
     void setUp() {
-        botService = new BotService(slackApi, roleMembersService, memberService);
+        botService = new BotService(slackApi, roleMembersService, memberService, diceGenerator);
     }
 
     @Test
@@ -154,5 +160,49 @@ class BotServiceTest {
         when(botRequest.isByTrigger(BotService.Command.PATCH_NOTE.getTrigger())).thenReturn(true);
 
         assertThat(botService.serve(botRequest)).isEqualTo(BotResponse.ofPatchNote());
+    }
+
+    @Test
+    void serve_WhenReceiveDice_ReturnOneToThirty() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.DICE.getTrigger())).thenReturn(true);
+
+        when(diceGenerator.generate()).thenReturn(new Dice(30));
+
+        assertThat(botService.serve(botRequest).getText()).contains("30점이에요"
+                , DiceEmojiTable.findEmoji(new Dice(30)));
+    }
+
+    @Test
+    void serve_WhenReceiveDice_ReturnThirtyOneToSixty() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.DICE.getTrigger())).thenReturn(true);
+
+        when(diceGenerator.generate()).thenReturn(new Dice(60));
+
+        assertThat(botService.serve(botRequest).getText()).contains("60점이에요"
+                , DiceEmojiTable.findEmoji(new Dice(60)));
+    }
+
+    @Test
+    void serve_WhenReceiveDice_ReturnSixtyOneToNinetyNine() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.DICE.getTrigger())).thenReturn(true);
+
+        when(diceGenerator.generate()).thenReturn(new Dice(99));
+
+        assertThat(botService.serve(botRequest).getText()).contains("99점이에요"
+                , DiceEmojiTable.findEmoji(new Dice(99)));
+    }
+
+    @Test
+    void serve_WhenReceiveDice_ReturnHundred() {
+        when(botRequest.isByTrigger(anyString())).thenReturn(false);
+        when(botRequest.isByTrigger(BotService.Command.DICE.getTrigger())).thenReturn(true);
+
+        when(diceGenerator.generate()).thenReturn(new Dice(100));
+
+        assertThat(botService.serve(botRequest).getText()).contains("100점이에요"
+                , DiceEmojiTable.findEmoji(new Dice(100)));
     }
 }
